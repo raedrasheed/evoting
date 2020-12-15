@@ -197,7 +197,7 @@ class HomeController extends Controller
 		if($request->hasFile('photo')){
 			if ($request->file('photo')->isValid()) {				
 				$image_name = date('mdYHis') . uniqid() . $request->file('photo')->getClientOriginalName();
-				$path = base_path() . '/public/imgs/photos';
+				$path = 'imgs/photos';
 				$request->file('photo')->move($path,$image_name);
 				$photo = 'imgs/photos/'.$image_name;
 			}else{
@@ -274,7 +274,7 @@ class HomeController extends Controller
 		if($request->hasFile('photo')){
 			if ($request->file('photo')->isValid()) {				
 				$image_name = date('mdYHis') . uniqid() . $request->file('photo')->getClientOriginalName();
-				$path = base_path() . '/public/imgs/photos';
+				$path = 'imgs/photos';
 				$request->file('photo')->move($path,$image_name);
 				$photo = 'imgs/photos/'.$image_name;
 			}
