@@ -2,7 +2,7 @@
 
 @section('content')
 @if (Auth::user()->role == 1)
-	@php ($defualtPhoto = 'imgs/photo.jpg')
+	@php ($defualtPhoto = 'imgs/photos/photo.jpg')
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">

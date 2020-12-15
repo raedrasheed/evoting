@@ -70,8 +70,8 @@
 								<label>
 									<input id="{{ $presidentialNominee->id }}" name="{{ $presidentialNominee->id }}" type="checkbox" class="option-input checkbox presidential-nominees" onchange="validate(this,1)" />							
 								</label>
-								<img class="nominee-photo" src="{{ asset($presidentialNominee->photo) }}"/>
-								{{ $presidentialNominee->name }}						
+								<img class="nominee-photo" src="{{ asset($presidentialNominee->photo) }}"/><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $presidentialNominee->name }}						
 							</div>
 						@endforeach	
 					</div>
@@ -84,10 +84,10 @@
 						@foreach ($academicMemberNominees as $academicMemberNominee)
 							<div class="raw raw-shadow top-bottom-padding-10">
 								<label>
-									<input id="{{ $academicMemberNominee->id }}" name="{{ $academicMemberNominee->id }}" type="checkbox" class="option-input checkbox members-nominees" onchange="validate(this,2)"/>							
+									<input id="{{ $academicMemberNominee->id }}" name="{{ $academicMemberNominee->id }}" type="checkbox" class="option-input checkbox academic-members-nominees" onchange="validate(this,2)"/>							
 								</label>
-								<img class="nominee-photo" src="{{ asset($academicMemberNominee->photo) }}"/>
-								{{ $academicMemberNominee->name }}						
+								<img class="nominee-photo" src="{{ asset($academicMemberNominee->photo) }}"/><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $academicMemberNominee->name }}						
 							</div>
 						@endforeach						
 					</div>
@@ -100,10 +100,10 @@
 						@foreach ($administrativeMemberNominees as $administrativeMemberNominee)
 							<div class="raw raw-shadow top-bottom-padding-10">
 								<label>
-									<input id="{{ $administrativeMemberNominee->id }}" name="{{ $administrativeMemberNominee->id }}" type="checkbox" class="option-input checkbox members-nominees" onchange="validate(this,2)"/>							
+									<input id="{{ $administrativeMemberNominee->id }}" name="{{ $administrativeMemberNominee->id }}" type="checkbox" class="option-input checkbox administrative-members-nominees" onchange="validate(this,3)"/>							
 								</label>
-								<img class="nominee-photo" src="{{ asset($administrativeMemberNominee->photo) }}"/>
-								{{ $administrativeMemberNominee->name }}						
+								<img class="nominee-photo" src="{{ asset($administrativeMemberNominee->photo) }}"/><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $administrativeMemberNominee->name }}						
 							</div>
 						@endforeach						
 					</div>
@@ -128,8 +128,18 @@
 				thisObj.checked=false;
 				swal("{{ __('Vote Error') }}", "{{ __('You can not voting more than one nominee') }}", "error");
 			 }
-		}else{
-			$(".members-nominees").each(function () {
+		}else if(type == 2){
+			$(".academic-members-nominees").each(function () {
+				if($(this).prop('checked'))
+					cnt++;
+			  });
+			 if(cnt > 4){
+				 thisObj.checked=false;
+				swal("{{ __('Vote Error') }}", "{{ __('You can not voting more than 4 nominees') }}", "error");
+				
+			 }			
+		}else if(type == 3){
+			$(".administrative-members-nominees").each(function () {
 				if($(this).prop('checked'))
 					cnt++;
 			  });

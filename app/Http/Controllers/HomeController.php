@@ -118,14 +118,26 @@ class HomeController extends Controller
 		$allVoters = $users->count();
 		$blocks = Block::all();
 		$totalVotes = $blocks->count();
-		$votingPrecentage = $totalVotes / $allVoters * 100;
+		if ($allVoters >0)
+			$votingPrecentage = $totalVotes / $allVoters * 100;
+		else $votingPrecentage = 0;
+		
+		$parm = '"choice":"true"';				
+		$nomineeVotesCounter = Block::where('vote', 'LIKE', "%$parm%")->
+								get()->count();
+								
+		$blankVotes = $totalVotes - $nomineeVotesCounter;
 		
 		$presidentialNominees = Nominee::orderBy('name', 'asc')->
 										get()->
 										where('type','1');
-		$memberNominees = Nominee::orderBy('name', 'asc')->
+		$academicMemberNominees = Nominee::orderBy('name', 'asc')->
 										get()->
-										whereIn('type', [2, 3]);
+										where('type', '2');
+										
+		$administrativeMemberNominees = Nominee::orderBy('name', 'asc')->
+										get()->
+										where('type', '3');
 										
 		$nomineesVotesJSON = $this->getVotingResults();
 		
@@ -152,9 +164,9 @@ class HomeController extends Controller
 			}
 			$prevBlock = $block;
 		}
-		$correctVotes = $totalVotes - $incorrectVotes;
+		$correctVotes = $totalVotes - $incorrectVotes - $blankVotes;
 		
-        return view('results',compact('allVoters','totalVotes','correctVotes','incorrectVotes','votingPrecentage','nomineesVotesJSON'));
+        return view('results',compact('allVoters','totalVotes','correctVotes','incorrectVotes','votingPrecentage','blankVotes','nomineesVotesJSON'));
     }
 	public function settings()
     {
@@ -269,6 +281,7 @@ class HomeController extends Controller
 			$user = new User();
 			$user->password = Hash::make($request->input('password'));
 			$this->addLog("Add new user: ".$request->input('name'));
+			 
 		}
 		
 		if($request->hasFile('photo')){
@@ -392,7 +405,7 @@ class HomeController extends Controller
 			$parm = $idParm.' , '.$choiceParm;
 			$nomineeVotes = Block::where('vote', 'LIKE', "%$parm%")->
 									get();
-									
+			
 			$nomineeVotesCounter = Block::where('vote', 'LIKE', "%$parm%")->
 									get()->count();
 			

@@ -78,6 +78,18 @@
 	 background-color: #EEE;
 	 border-radius: 20px 20px 0 0;
  }
+ 
+ .stat-bar-name{
+    font-size: 12px;
+    position: relative;
+    top: 4px;
+    /*right: 43px;*/
+    z-index: 100;
+    color: #FFF;
+    background-color: #3d3d3d;
+    padding-right: 7px;
+    padding-left: 7px;
+ }
  /************************* Statistics Circle **********************/
 
  .stat-main {
@@ -139,13 +151,13 @@
   left:8em;
   /*&:nth-of-type(2n) {
     background: lighten($red, 10%);*/
-	border-radius: 5px 0 0 5px ;
+	/*border-radius: 5px 0 0 5px ;*/
   }
   .stat-label {
     font-size: 0.75em;
     /*padding: 1em;*/
     background: #3d3d3d;
-    width: 12em;
+    width: 0em;
 	/*left:-11em;*/
     display: inline-block;
     position: relative;
