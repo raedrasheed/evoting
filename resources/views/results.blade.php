@@ -78,12 +78,14 @@
 									@else
 										@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100)
 									@endif
-									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:8em;">
-										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-11em;">	
-											 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px; height:45px;border: solid 2px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
-											 {{ $nomineeVotes['name'] }}
+									<span class="stat-bar-name">>{{ $nomineeVotes['name'] }}</span>
+									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
+										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
+											 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 2px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
+											 
 										</span>
-									</div>	
+									</div>
+									
 								@endif
 							@endforeach	
 						</div>
@@ -108,12 +110,13 @@
 									@else
 										@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100)
 									@endif
-									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:8em;">
-										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-11em;">	
+									<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
+									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
+										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
 											 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 2px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
-											 {{ $nomineeVotes['name'] }}
+											 
 										</span>
-									</div>	
+									</div>
 								@endif
 							@endforeach	
 						</div>
@@ -138,10 +141,11 @@
 									@else
 										@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100)
 									@endif
-									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:8em;">
-										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-11em;">	
+									<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
+									<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
+										<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
 											 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 2px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
-											 {{ $nomineeVotes['name'] }}
+											 
 										</span>
 									</div>	
 								@endif
