@@ -30,8 +30,10 @@
 								<label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
 
 								<div class="col-md-8">
-									<label for="photo"> <img id="photoImg"  src="@if(isset($nominee)){{ asset($nominee->photo) }}@else{{ old('photo') }}@endif" style="width:100px;height:100px; border: solid 2px #000;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';" /></label>
-									<input type="file" style="display:none;" id="photo" name="photo" class="form-control @error('photo') is-invalid @enderror" name="photo" value="@if(isset($nominee)){{ $nominee->photo }}@else{{ old('photo') }}@endif" required autocomplete="photo" autofocus onChange="loadImage(this);">
+									<label for="photo"> 
+										<img id="photoImg"  src="@if(isset($nominee)){{ asset($nominee->photo) }}@else{{ old('photo') }}@endif" style="width:100px;height:100px; border: solid 2px #000;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';" />
+									</label>
+									<input type="file" style="display:none;" id="photo" name="photo" class="form-control @error('photo') is-invalid @enderror" name="photo" value="@if(isset($nominee)){{ $nominee->photo }}@else{{ old('photo') }}@endif" onChange="loadImage(this);">
 									@error('photo')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>

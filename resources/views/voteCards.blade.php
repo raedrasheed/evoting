@@ -168,8 +168,8 @@
 					</div>
 				</div>
 				<p>
-							{!! $blocks->links() !!}
-						</p>
+					{!! $blocks->links() !!}
+				</p>
 				
 			</div>
 		</div>	

@@ -43,7 +43,7 @@
 
 								<div class="col-md-8">
 									<label for="photo"><img id="photoImg" src="@if(isset($user)){{ asset($user->photo) }}@else{{ old('photo') }}@endif" style="width:100px;height:100px; border: solid 2px #000;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';" /></label>
-									<input type="file" style="display:none;" id="photo" name="photo" class="form-control @error('photo') is-invalid @enderror" name="photo" value="@if(isset($user)){{ $user->photo }}@else{{ old('photo') }}@endif" required autocomplete="photo" autofocus onChange="loadImage(this);">
+									<input type="file" style="display:none;" id="photo" name="photo" class="form-control @error('photo') is-invalid @enderror" name="photo" value="@if(isset($user)){{ $user->photo }}@else{{ old('photo') }}@endif" onChange="loadImage(this);">
 									@error('photo')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>

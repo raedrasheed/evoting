@@ -178,10 +178,12 @@ class HomeController extends Controller
 			'name' => 'required',
 			'type' => 'required',				
 		]);
+		$photo = '';
 		
 		if($request->input('id')){
 			
 			$nominee = Nominee::find($request->input('id'));
+			$photo = $nominee->photo;
 			
 			$this->addLog("Edit nominee: ".$request->input('name'));
 						
@@ -197,10 +199,15 @@ class HomeController extends Controller
 				$image_name = date('mdYHis') . uniqid() . $request->file('photo')->getClientOriginalName();
 				$path = base_path() . '/public/imgs/photos';
 				$request->file('photo')->move($path,$image_name);
-				$nominee->photo = 'imgs/photos/'.$image_name;
+				$photo = 'imgs/photos/'.$image_name;
+			}else{
+				//$photo = 'imgs/photos/photo.jpg';
 			}
+		}else{
+			//$photo = 'imgs/photos/photo.jpg';
 		}
 		$nominee->name = $request->input('name');		
+		$nominee->photo = $photo;		
 		$nominee->type = $request->input('type');
 		$nominee->description = $request->input('description');
 		
@@ -244,12 +251,14 @@ class HomeController extends Controller
 			'role' => 'required',
 			'mobile' => 'required'			
 		]);
+		$photo = '';
 		
 		if($request->input('id')){
 			$user = User::find($request->input('id'));
+			$photo = $user->photo;
 			
 			if($user->password == $request->input('password'))
-				$user->password = $request->input('password');
+				$user->password = $request->input('password');				
 			else
 				$user->password = Hash::make($request->input('password'));
 			
@@ -267,12 +276,13 @@ class HomeController extends Controller
 				$image_name = date('mdYHis') . uniqid() . $request->file('photo')->getClientOriginalName();
 				$path = base_path() . '/public/imgs/photos';
 				$request->file('photo')->move($path,$image_name);
-				$user->photo = 'imgs/photos/'.$image_name;
+				$photo = 'imgs/photos/'.$image_name;
 			}
 		}
 		
 		$user->outer_id = $request->input('outer_id');
 		$user->name = $request->input('name');		
+		$user->photo = $photo;
 		$user->username = $request->input('username');
 		$user->role = $request->input('role');
 		$user->description = $request->input('description');
