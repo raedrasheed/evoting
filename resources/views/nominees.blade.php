@@ -2,6 +2,7 @@
 
 @section('content')
 @if (Auth::user()->role == 1)
+@php ($defualtPhoto = 'imgs/photos/photo.jpg')
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-12">
@@ -26,7 +27,7 @@
 							<tbody>
 								@foreach ($nominees as $nominee)
 									<tr class="raw-shadow">
-										<th><img class="nominee-photo" src="{{ asset($nominee->photo) }}"/></th>
+										<th><img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>
 										<td>{{ $nominee->name }}</td>
 										<td>@if ($nominee->type == 1) {{ __('Presidential') }} @elseif ($nominee->type == 2) {{ __('Academic') }} @elseif ($nominee->type == 3) {{ __('Administrative') }} @endif</td>
 										<td>{{ $nominee->description }}</td>
