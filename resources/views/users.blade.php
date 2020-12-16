@@ -30,6 +30,7 @@
 								</tr>
 							</thead>
 							<tbody>
+							
 								@foreach ($users as $user)
 									<tr class="raw-shadow">
 										<th><img class="nominee-photo" src="{{ asset($user->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>

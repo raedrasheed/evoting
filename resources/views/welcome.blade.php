@@ -68,21 +68,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">{{ __('Home') }}</a>
-                    @else
-                        <a href="{{ route('login') }}">{{ __('Login') }}</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">{{ __('Register') }}</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
+        <div class="flex-center position-ref full-height">    
             <div class="content">
 				 <div class="title m-b-md">
                     <img src="{{ asset('imgs/iug_logo.png') }}" width="40%">
@@ -92,9 +78,22 @@
                 </div>
 
                 <div class="links">
-                    <p><a>{{ __('Election Commission') }}</a></p>
-                    <p><a>{{ __('Islamic University of Gaza') }}</a></p>
+                    <p><a>{{ __('Election Commission') }}</a> - <a>{{ __('Islamic University of Gaza') }}</a></p>
                 </div>
+				
+				@if (Route::has('login'))
+					<div class="links">
+						@auth
+							<a href="{{ url('/home') }}">{{ __('Home') }}</a>
+						@else
+							<a href="{{ route('login') }}">{{ __('Login') }}</a>
+							@if (Route::has('register'))
+								<a href="{{ route('register') }}">{{ __('Register') }}</a>
+							@endif
+						@endauth
+					</div>
+				@endif
+                
             </div>
         </div>
     </body>
