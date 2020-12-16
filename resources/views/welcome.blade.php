@@ -76,11 +76,6 @@
                 <div class="title m-b-md">
                     {{ trans('app.title') }}
                 </div>
-
-                <div class="links">
-                    <p><a>{{ __('Election Commission') }}</a> - <a>{{ __('Islamic University of Gaza') }}</a></p>
-                </div>
-				
 				@if (Route::has('login'))
 					<div class="links">
 						@auth
@@ -93,6 +88,19 @@
 						@endauth
 					</div>
 				@endif
+
+                <div class="links">
+                    <p><a>{{ __('Election Commission') }}</a> - <a>{{ __('Islamic University of Gaza') }}</a></p>
+                </div>
+				
+				
+				<div class="links">
+                    <a>{{ __('Voting Time') }}</a>
+                </div>
+				
+				<div class="links">
+                    <a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+                </div>
                 
             </div>
         </div>

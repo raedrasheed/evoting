@@ -11,6 +11,10 @@
 						 <h4>@lang('Welcome')</h4>
 						 <p>{{ __('Election Commission') }}</p>
                          <p>{{ __('Islamic University of Gaza') }}</p>
+						 <div class="links">
+							<a>{{ __('Voting Time') }}</a>:
+							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+						</div>
                     
 					</div>
 				</div>
@@ -24,7 +28,11 @@
 				<div class="card">
 					<div class="card-header">{{ __('Notes') }}</div>
 					<div class="card-body">
-						{{ __('You have finish your vote') }}.
+						{{ __('You have finish your vote') }}
+						 <div class="links">
+							<a>{{ __('Voting Time') }}</a>:
+							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -39,6 +47,10 @@
 					<div class="card-body">
 						<h4>@lang('Welcome')</h4>
 						{{ __('Voting not opened yet') }}
+						 <div class="links">
+							<a>{{ __('Voting Time') }}</a>:
+							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -53,6 +65,10 @@
 					<div class="card-body">
 						<h4>@lang('Welcome')</h4>
 						{{ __('Voting ended') }}
+						 <div class="links">
+							<a>{{ __('Voting Time') }}</a>:
+							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+						</div>
 					</div>
 				</div>
 			</div>
