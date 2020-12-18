@@ -15,7 +15,8 @@
 					<div class="card-body data-table-div">
 						<table class="data-table">	
 							<thead>
-								<tr>
+								<tr>									
+									<th>#</th>
 									<th>{{ __('Photo') }}</th>
 									<th>{{ __('Name') }}</th>
 									<th>{{ __('Nomination Type') }}</th>
@@ -25,8 +26,10 @@
 								</tr>
 							</thead>
 							<tbody>
+								@php ($cnt=1)
 								@foreach ($nominees as $nominee)
 									<tr class="raw-shadow">
+										<th>{{ $cnt }}</th>
 										<th><img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>
 										<td>{{ $nominee->name }}</td>
 										<td>@if ($nominee->type == 1) {{ __('Presidential') }} @elseif ($nominee->type == 2) {{ __('Academic') }} @elseif ($nominee->type == 3) {{ __('Administrative') }} @endif</td>
@@ -34,6 +37,7 @@
 										<th><a href="{{ route('addEditNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/edit.png" title="{{ __('Edit Nominee') }}" /></a></th>
 										<th><a href="{{ route('deleteNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/delete.png" title="{{ __('Delete Nominee') }}"/></a></th>								
 									</tr>
+									@php ($cnt++)
 								@endforeach
 							</tbody>
 						</table>

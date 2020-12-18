@@ -206,11 +206,11 @@
 					url: '{{ route("addBlock") }}',
 					type: 'POST',
 					/* send the csrf-token and the input to the controller */
-					data: {_token: CSRF_TOKEN, voteJSON:voteJSON, block_headerJSON:block_headerJSON, id:{{ Auth::user()->id }} },
+					data: {_token: CSRF_TOKEN, voteJSON:voteJSON, voteJSONsha256:sha256(voteJSON), id:{{ Auth::user()->id }} },
 					dataType: 'JSON',
 					/* remind that 'data' is the response of the AjaxController */
 					success: function (data) { 
-						//alert('JSON Ok..');
+						alert('JSON Ok..');
 					}
 				}); 
 				swal("{{ __('Vote saved!') }}", "{{ __('Your account will locked permanently!') }}", "success");

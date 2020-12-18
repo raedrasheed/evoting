@@ -26,7 +26,7 @@
 								if(!$prevBlock){
 									$block_header = json_decode($block->block_header, true);
 									if(hash('sha256',$block->vote) != $block_header["vote_hash"]){
-										echo "<span style='color:#e74c3c;'>";										
+										echo "<span style='color:#e74c3c;'>";
 									}else{
 										echo "<span style='color:#38c172;'>";
 									}										

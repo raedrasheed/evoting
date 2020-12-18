@@ -41,13 +41,13 @@ class BlockController extends Controller
 			$log->mac = $MAC;
 			$log->save();
 			
-			/*$lastBlock = Block::latest()->first();
+			$lastBlock = Block::latest()->first();
 			
 			$version = "1.0";
 			if($lastBlock)
 				$previous_block_hash = $lastBlock->block_hash;
 			else $previous_block_hash = '0';
-			$vote_hash = hash('sha256',$request->input('json'));
+			$vote_hash = hash('sha256',$request->input('voteJSON'));
 			$timestamp = Carbon::now()->timestamp;		
 			$difficulty_target = 3;
 			
@@ -55,7 +55,7 @@ class BlockController extends Controller
 										$previous_block_hash,
 										$vote_hash,
 										$timestamp,
-										$difficulty_target);*/
+										$difficulty_target);
 			
 			/*$version = $request->input('version');
 			$previous_block_hash = $request->input('previous_block_hash');
@@ -64,16 +64,16 @@ class BlockController extends Controller
 			$difficulty_target = $request->input('difficulty_target');
 			$nonce = $request->input('nonce');*/
 			
-			$block_header = $request->input('block_headerJSON');
+			//$block_header = $request->input('block_headerJSON');
 			//$block_hash = $request->input('block_hash');
 			
-			/*$block_header =    '{"version" : "'.$version.'",'.
+			$block_header =    '{"version" : "'.$version.'",'.
 								'"previous_block_hash": "'.$previous_block_hash.'",'.
 								'"vote_hash": "'.$vote_hash.'",'.
 								'"timestamp": "'.$timestamp.'",'.
 								'"difficulty_target": "'.$difficulty_target.'",'.	
 								'"nonce": "'.$nonce.'"'.
-								'}';*/
+								'}';
 								
 			$block_hash = hash('sha256',$block_header);
 			
@@ -168,7 +168,7 @@ class BlockController extends Controller
 								$difficulty_target)
     {
 		
-		/*$stratZero = '';
+		$stratZero = '';
 		for($cnt=0; $cnt < $difficulty_target; $cnt++)
 			$stratZero = $stratZero.'0';
 		$nonce = 0;
@@ -185,7 +185,7 @@ class BlockController extends Controller
 					break;
 		}
 		
-		return $nonce;*/
+		return $nonce;
 	}
 	
 	public function refineBlockchain(){
