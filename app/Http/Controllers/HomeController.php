@@ -321,9 +321,9 @@ class HomeController extends Controller
 	public function logs($id = null)
     {
 		if($id){			
-			$logs = Log::where('user_id',$id)->paginate(10);			
+			$logs = Log::where('user_id',$id)->orderBy('created_at', 'desc')->paginate(10);			
 		}else{
-			$logs = Log::paginate(10);		
+			$logs = Log::orderBy('created_at', 'desc')->paginate(10);		
 		}        
 		return view ('logs',compact('logs'));     
     }

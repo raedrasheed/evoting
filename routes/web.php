@@ -44,7 +44,7 @@ Route::post('/saveNominee', 'HomeController@saveNominee')->name('saveNominee');
 
 Route::get('/users', 'HomeController@users')->name('users');
 Route::get('/addEditUser/{id}', 'HomeController@addEditUser')->name('addEditUser');
-Route::get('/deleteUser/{id}', 'HomeController@deleteUser')->name('deleteUser');
+//Route::get('/deleteUser/{id}', 'HomeController@deleteUser')->name('deleteUser');
 Route::post('/saveUser', 'HomeController@saveUser')->name('saveUser');
 
 Route::post('/addBlock', 'BlockController@addBlock')->name('addBlock');

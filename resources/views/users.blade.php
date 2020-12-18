@@ -25,12 +25,10 @@
 									<th>{{ __('Description') }}</th>
 									<th>{{ __('Mobile') }}</th>
 									<th>{{ __('Logs') }}</th>
-									<th>{{ __('Edit') }}</th>
-									<th>{{ __('Delete') }}</th>								
+									<th>{{ __('Edit') }}</th>	
 								</tr>
 							</thead>
-							<tbody>
-							
+							<tbody>							
 								@foreach ($users as $user)
 									<tr class="raw-shadow">
 										<th><img class="nominee-photo" src="{{ asset($user->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>
@@ -43,7 +41,6 @@
 										<td>{{ $user->mobile }}</td>
 										<th><a href="{{ route('logs', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/log.png') }}" title="{{ __('Show User Logs') }}"/></a></th>
 										<th><a href="{{ route('addEditUser', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/edit.png') }}" title="{{ __('Edit User') }}"/></a></th>
-										<th><a href="{{ route('deleteUser', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="{{ __('Delete User') }}"/></a></th>									
 									</tr>
 								@endforeach								
 							</tbody>
