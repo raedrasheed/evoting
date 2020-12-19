@@ -178,8 +178,7 @@
 		closeOnConfirm: false,   
 		closeOnCancel: false }, 
 		function(isConfirm){   
-			if (isConfirm) 
-		{   
+			if (isConfirm){   
 				
 			var nomineeJSON = '';
 			var voteJSON_t = '{ "vote" : [';
@@ -213,9 +212,24 @@
 						alert('JSON Ok..');
 					}
 				}); 
-				swal("{{ __('Vote saved!') }}", "{{ __('Your account will locked permanently!') }}", "success");
-				document.getElementById('logout-form').submit();
-		
+				//swal("{{ __('Vote saved!') }}", "{{ __('Your account will locked permanently!') }}", "success");
+				//document.getElementById('logout-form').submit();
+				//location.replace("http://election.iugaza.edu.ps/home");
+		        swal({   title: "{{ __('Vote saved!') }}",   
+        		text: "{{ __('Your account will locked permanently!') }}",   
+        		type: "success",   
+        		showCancelButton: false,   
+        		confirmButtonColor: "#38c172",   
+        		confirmButtonText: "{{ __('Yes') }}",   
+        		//cancelButtonText: "{{ __('I am not sure!') }}",   
+        		closeOnConfirm: false,   
+        		closeOnCancel: false }, 
+        		function(isConfirm){   
+        			if (isConfirm){
+        		     location.replace("http://election.iugaza.edu.ps/home");    
+        		    }
+        		});
+			
 			 
 			
 			//var block_hash = sha256(block_header);
@@ -237,7 +251,7 @@
 			var block_hash = '';
 			var nonce = 0;				
 			
-			while(1){						
+			/*while(1){		*/				
 				nonce++;
 				var block_headerJSON = '{"version" : "{{ $version }}",'+
 								'"previous_block_hash": "{{ $previous_block_hash }}",'+
@@ -249,9 +263,9 @@
 								//alert(block_headerJSON);
 							
 				block_hash = sha256(block_headerJSON);
-				if(block_hash.startsWith(stratZero, 0))
+		/*		if(block_hash.startsWith(stratZero, 0))
 					break;
-			}
+			}*/
 			
 			
 			return block_headerJSON;

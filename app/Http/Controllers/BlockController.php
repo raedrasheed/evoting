@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Block;
 use Carbon\Carbon;
 use App\User;
+use App\Voted;
+
 use App\Log;
 use Auth;
 use App\Node001;
@@ -27,9 +29,33 @@ class BlockController extends Controller
 		$id = $request->input('id');
 		
 		$user = User::find($id);
-		if($user->voted != 1){
+		$vodted = Voted::where('user_id',$id)->first();
+
+		
+		if($vodted==""){
+		   
+			$newVoted = new Voted();
+			$vodteds = Voted::first();
+			if($vodteds != ""){	
+				$lastVoted = Voted::latest()->first();				
+				$newVoted->previous_hash = $lastVoted->hash;
+			}else{
+				$newVoted->previous_hash = "0";						
+			}
+			
+			
+			$newVoted->user_id = Auth::user()->id;
+			$newVoted->user_name = Auth::user()->username;
+			$stringToHash = $newVoted->user_id . $newVoted->user_name . $newVoted->previous_hash;
+			$newVoted->hash = hash('sha256',$stringToHash);
+			$newVoted->difficulty_target = 3;
+			$newVoted->save();
+			
+				
 			$user->voted = 1;
 			$user->save();
+			
+			// return "Hi..".$newVoted->user_id;	
 			
 			$log = new Log();
 			$log->user_id = Auth::user()->id;
@@ -41,6 +67,7 @@ class BlockController extends Controller
 			$log->mac = $MAC;
 			$log->save();
 			
+		
 			$lastBlock = Block::latest()->first();
 			
 			$version = "1.0";
@@ -154,7 +181,7 @@ class BlockController extends Controller
 			$node010->block_hash = $block_hash;
 			$node010->save();
 			
-			return "Block created successflly.";
+			return "Block created successflly.";			
 		}else{
 			return "Can't create block for same voter.";
 		}

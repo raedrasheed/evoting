@@ -53,6 +53,12 @@ Route::get('/refineBlockchain', 'BlockController@refineBlockchain')->name('refin
 
 Route::get('/lang/{locale}', 'LocalizationController@index');
 
+Route::get('/sendSMSForAll', 'HomeController@sendSMSForAll')->name('sendSMSForAll');
+Route::get('/sendSMSToken/{username}', 'HomeController@sendSMSToken')->name('sendSMSToken');
+
+
+
+
 
 
 

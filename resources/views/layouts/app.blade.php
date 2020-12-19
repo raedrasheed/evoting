@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="icon" type="image/png" href="{{ asset('imgs/iug_logo.png') }}"/>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -68,6 +70,9 @@
                                     </a>
 									<a class="dropdown-item" href="{{ route('users') }}">
                                         <!--{{ __('Logout') }}--> {{ __('Users') }}
+                                    </a>
+									<a class="dropdown-item" href="{{ route('sendSMSForAll') }}">
+                                        <!--{{ __('Logout') }}--> {{ __('Send SMS to non-voting users') }}
                                     </a>
 									<a class="dropdown-item" href="{{ route('logs', [ 'id'=> 0 ]) }}">
                                         <!--{{ __('Logout') }}--> {{ __('Logs') }}

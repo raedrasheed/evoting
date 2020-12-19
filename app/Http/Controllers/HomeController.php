@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
+use Config;
 		  
 use App\User;
+use App\Voted;
 use App\Nominee;
 use App\Log;
 use Auth;
@@ -51,6 +54,16 @@ class HomeController extends Controller
 			$previous_block_hash = $lastBlock->block_hash; // Need to check and recalculate
 		else $previous_block_hash = '0';
 		$difficulty_target = 3;
+		
+		$vodted = Voted::where('user_id',Auth::user()->id)->first();
+			
+		$user = User::find(Auth::user()->id);
+		if($vodted==null){
+			$user->voted = 0;
+		}else{
+			$user->voted = 1;
+		}
+		$user->save();
 		
         return view('home',compact('presidentialNominees','academicMemberNominees','administrativeMemberNominees','version','previous_block_hash', 'difficulty_target'));
     }
@@ -464,6 +477,72 @@ class HomeController extends Controller
 		
 		return $nomineesVotesJSON;
 
+	}
+	
+	public function sendSMSForAll(){
+		$send_sms_username = "";
+		$send_sms_mobile = "";
+		$vc_token_rnd = 0;
+		
+		$users = User::where('voted','0')->
+					   where('role','2')->get();
+		$vc_token_msg = urlencode (Config::get('settings.remindMessage'));	
+		foreach($users as $user){
+			$send_sms_mobile = $user->mobile;	
+			$result = file_get_contents("https://www.nsms.ps/api.php?comm=sendsms&user=raed.rasheed&pass=offlinesms2020&to=".$send_sms_mobile."&message=".$vc_token_msg."&sender=OfflineSMS");
+			
+		
+		   /* $ch = curl_init();
+
+            // set URL and other appropriate options
+            curl_setopt($ch, CURLOPT_URL, "https://www.nsms.ps/api.php?comm=sendsms&user=raed.rasheed&pass=offlinesms2020&to=".$send_sms_mobile."&message=".$vc_token_msg."&sender=OfflineSMS");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            
+            // grab URL and pass it to the browser
+            curl_exec($ch);
+            
+            // close cURL resource, and free up system resources
+            curl_close($ch);
+            sleep(5);*/
+		
+		}
+		
+		return back();
+		
+	}
+	
+	public function sendSMSToken($username){
+		$user = User::where('username',$username)->first();
+		$send_sms_username = "";
+		$send_sms_mobile = "";
+		$vc_token_rnd = 0;
+		$found = 0;
+		
+		if($user){
+			$send_sms_mobile = "972".$user->mobile;
+			$vc_token_rnd = mt_rand(100000, 999999);
+			$vc_token_msg = $vc_token_rnd;//."%0a%0aOfflineSMS%0ahttps://cutt.ly/crV6aWo";
+    		$vc_token = password_hash($vc_token_rnd, PASSWORD_BCRYPT);//mt_rand(100000, 999999);
+			$user->password = $vc_token;
+			$user->save();
+			$result = file_get_contents("https://www.nsms.ps/api.php?comm=sendsms&user=raed.rasheed&pass=offlinesms2020&to=".$send_sms_mobile."&message=".$vc_token_msg."&sender=OfflineSMS");
+			
+		/*
+		    $ch = curl_init();
+
+            // set URL and other appropriate options
+            curl_setopt($ch, CURLOPT_URL, "https://www.nsms.ps/api.php?comm=sendsms&user=raed.rasheed&pass=offlinesms2020&to=".$send_sms_mobile."&message=".$vc_token_msg."&sender=OfflineSMS");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            
+            // grab URL and pass it to the browser
+            curl_exec($ch);
+            
+            // close cURL resource, and free up system resources
+            curl_close($ch);*/
+		
+		}
+		
+		return redirect('/');
 	}
 	
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
 use App\Log;
+use App\Voted;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -58,6 +60,17 @@ class LoginController extends Controller
 		$log->mac = $MAC;
 		
 		$log->save();
+		
+		$vodted = Voted::where('user_id',$user->id)->first();
+		$canVote = 0;
+		
+		$user = User::find($user->id);
+		if($vodted==null){
+			$user->voted = 0;
+		}else{
+			$user->voted = 1;
+		}
+		$user->save();
 		
 		return redirect('home');
 	}
