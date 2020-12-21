@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -39,6 +40,11 @@ class User extends Authenticatable
 	
 	public function logs()
     {
-        return $this->hasMany('App\Log', 'id', 'user_id');
+        return $this->hasMany(Log::class);
+    }
+	
+	public function vote()
+    {
+        return $this->hasOne(Voted::class);
     }
 }

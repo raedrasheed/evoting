@@ -88,7 +88,8 @@
 						@endauth
 					</div>
 				@endif
-
+				@php ($now = Carbon\Carbon::now())
+				@php ($now->addHours(2))
                 <div class="links">
                     <p><a>{{ __('Election Commission') }}</a> - <a>{{ __('Islamic University of Gaza') }}</a></p>
                 </div>
@@ -100,7 +101,8 @@
 				
 				<div class="links">
                     <a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
-                </div>
+					<p><a>{{ __('Now') }}: {{ $now }}</a></p>
+				</div>
                 
             </div>
         </div>

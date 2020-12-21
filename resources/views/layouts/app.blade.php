@@ -19,12 +19,16 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	
 	<script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
 	<link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
 	<script src="{{ asset('js/select2.min.js') }}"></script>
+	
+	
 </head>
 <body dir="{{(App::isLocale('ar') ? 'rtl' : 'ltr')}}" style="text-align:{{(App::isLocale('ar') ? 'right' : 'left')}}">
     <div id="app">
@@ -136,5 +140,31 @@
             @yield('content')
         </main>
     </div>
+	<script>
+		function myFunction() {
+		  var input, filter, table, tr, td, i, txtValue;
+		  input = document.getElementById("myInput");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("myTable");
+		  tr = table.getElementsByTagName("tr");
+		  
+		  for (i = 0; i < tr.length; i++) {
+			tds = tr[i].getElementsByTagName("td");
+			//alert(tds.length);
+			for (j = 0; j < tds.length; j++) {
+				td = tds[j];
+				if (td) {
+				  txtValue = td.textContent || td.innerText;
+				  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+					break;
+				  } else {
+					tr[i].style.display = "none";					
+				  }
+				}  
+			}				
+		  }
+		}
+	</script>
 </body>
 </html>

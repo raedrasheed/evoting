@@ -13,9 +13,10 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<table class="data-table">	
+						<input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="{{ __('Search..') }}" title="{{ __('Search..') }}">
+						<table id="myTable">	
 							<thead>
-								<tr>
+								<tr class="header">
 									<th>{{ __('ID') }}</th>
 									<th>{{ __('User') }}</th>
 									<th>{{ __('Action') }}</th>
@@ -27,21 +28,17 @@
 							</thead>
 							<tbody>
 								@foreach ($logs as $log)
-									<tr class="raw-shadow">
+									<tr>
 										<td>{{ $log->id }}</td>
 										<td>{{ $log->user->name }}</td>
 										<td>{{ $log->action }}</td>
 										<td>{{ $log->time }}</td>
-										<td>{{ $log->ip }}</td>
-																			
-										<th><a href="{{ route('deleteLog', [ 'id'=> $log->id ]) }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="{{ __('Delete Log') }}" /></a></th>								
+										<td>{{ $log->ip }}</td>																			
+										<td><a href="{{ route('deleteLog', [ 'id'=> $log->id ]) }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="{{ __('Delete Log') }}" /></a></td>								
 									</tr>
 								@endforeach	
 							</tbody>
 						</table>
-						<p>
-							{!! $logs->links() !!}
-						</p>
 					</div>
 				</div>
 			</div>

@@ -46,7 +46,7 @@ class BlockController extends Controller
 			
 			$newVoted->user_id = Auth::user()->id;
 			$newVoted->user_name = Auth::user()->username;
-			$stringToHash = $newVoted->user_id . $newVoted->user_name . $newVoted->previous_hash;
+			$stringToHash = $newVoted->user_id . $newVoted->user_name . Carbon::now()->timestamp . $newVoted->previous_hash;
 			$newVoted->hash = hash('sha256',$stringToHash);
 			$newVoted->difficulty_target = 3;
 			$newVoted->save();

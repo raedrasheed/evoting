@@ -55,17 +55,20 @@ class HomeController extends Controller
 		else $previous_block_hash = '0';
 		$difficulty_target = 3;
 		
-		$vodted = Voted::where('user_id',Auth::user()->id)->first();
+		$voted = Voted::where('user_id',Auth::user()->id)->first();
 			
 		$user = User::find(Auth::user()->id);
-		if($vodted==null){
-			$user->voted = 0;
+		if($voted==null){
+			//$user->voted = 0;
+			$votedFlag = 0;
 		}else{
 			$user->voted = 1;
+			$votedFlag = 1;
 		}
+	
 		$user->save();
 		
-        return view('home',compact('presidentialNominees','academicMemberNominees','administrativeMemberNominees','version','previous_block_hash', 'difficulty_target'));
+        return view('home',compact('votedFlag','presidentialNominees','academicMemberNominees','administrativeMemberNominees','version','previous_block_hash', 'difficulty_target'));
     }
 	
 	public function nominees()
@@ -90,7 +93,7 @@ class HomeController extends Controller
     {
 		$this->addLog("View all users");
 				
-		$users = User::orderBy('name')->paginate(10);		
+		$users = User::orderBy('name')->get();		
 		return view ('users',compact('users'));         
     }
 	public function blockchainExplorer()
@@ -98,7 +101,7 @@ class HomeController extends Controller
 		$this->addLog("View Blockchain Explorer");
 		
 		$fine = $this->blockchainValid();
-		$blocks = Block::paginate(10);
+		$blocks = Block::all();
 			
         return view('blockchainExplorer',compact('fine','blocks'));
     }
@@ -118,7 +121,7 @@ class HomeController extends Controller
 										where('type','3');
 		
 		$fine = $this->blockchainValid();
-		$blocks = Block::paginate(10);
+		$blocks = Block::all();
 		$noOfVotes = Block::all()->count();
 			
         return view('voteCards',compact('fine','noOfVotes','blocks','presidentialNominees','academicMemberNominees','administrativeMemberNominees'));
@@ -316,7 +319,7 @@ class HomeController extends Controller
 		
 		$user->save();
 		
-        $users = User::paginate(10);	
+        $users = User::all();	
 		return redirect()->route('users')->with( ['users' => $users] );
     }
 	public function deleteUser($id = null)
@@ -326,7 +329,7 @@ class HomeController extends Controller
 			$this->addLog("Delete user: ".$user->name);
 			$user->delete();
 		}
-		$users = User::paginate(10);		
+		$users = User::all();		
 		return redirect()->route('users')->with( ['users' => $users] );
 		
     }
@@ -334,9 +337,9 @@ class HomeController extends Controller
 	public function logs($id = null)
     {
 		if($id){			
-			$logs = Log::where('user_id',$id)->orderBy('created_at', 'desc')->paginate(10);			
+			$logs = Log::where('user_id',$id)->orderBy('created_at', 'desc')->get();			
 		}else{
-			$logs = Log::orderBy('created_at', 'desc')->paginate(10);		
+			$logs = Log::orderBy('created_at', 'desc')->get();		
 		}        
 		return view ('logs',compact('logs'));     
     }
@@ -348,7 +351,7 @@ class HomeController extends Controller
 			$this->addLog("Delete log action: ".$log->action);
 			$log->delete();
 		}
-		$logs = Log::paginate(10);		
+		$logs = Log::all();		
 		return redirect()->route('logs', '0')->with( ['logs' => $logs] );
 		
     }

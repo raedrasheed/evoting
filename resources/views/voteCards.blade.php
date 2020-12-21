@@ -167,10 +167,6 @@
 	
 					</div>
 				</div>
-				<p>
-					{!! $blocks->links() !!}
-				</p>
-				
 			</div>
 		</div>	
 	</div>

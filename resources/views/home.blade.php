@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php ($now = Carbon\Carbon::now())
+@php ($now->addHours(2))
+@php ($defualtPhoto = 'imgs/photos/photo.jpg')
 @if (Auth::user()->role == 1)
 	<div class="container">		
 		<div class="row justify-content-center">
@@ -14,6 +17,7 @@
 						 <div class="links">
 							<a>{{ __('Voting Time') }}</a>:
 							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p><a>{{ __('Now') }}: {{ $now }}</a></p>
 						</div>
                     
 					</div>
@@ -21,7 +25,7 @@
 			</div>
 		</div>	
 	</div>
-@elseif (Auth::user()->voted == 1)
+@elseif ($votedFlag == 1)
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -32,13 +36,14 @@
 						 <div class="links">
 							<a>{{ __('Voting Time') }}</a>:
 							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p><a>{{ __('Now') }}: {{ $now }}</a></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Carbon\Carbon::parse(config('settings.votingStartTime'))->gt(Carbon\Carbon::now()))
+@elseif (Carbon\Carbon::parse(config('settings.votingStartTime'))->gt($now))
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -50,13 +55,14 @@
 						 <div class="links">
 							<a>{{ __('Voting Time') }}</a>:
 							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p><a>{{ __('Now') }}: {{ $now }}</a></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt(Carbon\Carbon::now()))
+@elseif (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now))
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
@@ -68,6 +74,7 @@
 						 <div class="links">
 							<a>{{ __('Voting Time') }}</a>:
 							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p><a>{{ __('Now') }}: {{ $now }}</a></p>
 						</div>
 					</div>
 				</div>
@@ -86,7 +93,7 @@
 								<label>
 									<input id="{{ $presidentialNominee->id }}" name="{{ $presidentialNominee->id }}" type="checkbox" class="option-input checkbox presidential-nominees" onchange="validate(this,1)" />							
 								</label>
-								<img class="nominee-photo" src="{{ asset($presidentialNominee->photo) }}"/><br/>
+								<img class="nominee-photo" src="{{ asset($presidentialNominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $presidentialNominee->name }}						
 							</div>
 						@endforeach	
@@ -102,7 +109,7 @@
 								<label>
 									<input id="{{ $academicMemberNominee->id }}" name="{{ $academicMemberNominee->id }}" type="checkbox" class="option-input checkbox academic-members-nominees" onchange="validate(this,2)"/>							
 								</label>
-								<img class="nominee-photo" src="{{ asset($academicMemberNominee->photo) }}"/><br/>
+								<img class="nominee-photo" src="{{ asset($academicMemberNominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $academicMemberNominee->name }}						
 							</div>
 						@endforeach						
@@ -118,7 +125,7 @@
 								<label>
 									<input id="{{ $administrativeMemberNominee->id }}" name="{{ $administrativeMemberNominee->id }}" type="checkbox" class="option-input checkbox administrative-members-nominees" onchange="validate(this,3)"/>							
 								</label>
-								<img class="nominee-photo" src="{{ asset($administrativeMemberNominee->photo) }}"/><br/>
+								<img class="nominee-photo" src="{{ asset($administrativeMemberNominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $administrativeMemberNominee->name }}						
 							</div>
 						@endforeach						
@@ -226,7 +233,7 @@
         		closeOnCancel: false }, 
         		function(isConfirm){   
         			if (isConfirm){
-        		     location.replace("http://election.iugaza.edu.ps/home");    
+        		     location.replace("{{ route('home') }}");    
         		    }
         		});
 			

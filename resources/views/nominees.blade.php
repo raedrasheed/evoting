@@ -3,6 +3,7 @@
 @section('content')
 @if (Auth::user()->role == 1)
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
+@php ($searchIcon = 'imgs/searchicon.png')
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-12">
@@ -13,9 +14,10 @@
 						</div>
 					</div>
 					<div class="card-body data-table-div">
-						<table class="data-table">	
+						<input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="{{ __('Search..') }}" title="{{ __('Search..') }}">
+						<table id="myTable">	
 							<thead>
-								<tr>									
+								<tr class="header">									
 									<th>#</th>
 									<th>{{ __('Photo') }}</th>
 									<th>{{ __('Name') }}</th>
@@ -28,20 +30,19 @@
 							<tbody>
 								@php ($cnt=1)
 								@foreach ($nominees as $nominee)
-									<tr class="raw-shadow">
-										<th>{{ $cnt }}</th>
-										<th><img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>
+									<tr>
+										<td>{{ $cnt }}</td>
+										<td><img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></td>
 										<td>{{ $nominee->name }}</td>
 										<td>@if ($nominee->type == 1) {{ __('Presidential') }} @elseif ($nominee->type == 2) {{ __('Academic') }} @elseif ($nominee->type == 3) {{ __('Administrative') }} @endif</td>
 										<td>{{ $nominee->description }}</td>
-										<th><a href="{{ route('addEditNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/edit.png" title="{{ __('Edit Nominee') }}" /></a></th>
-										<th><a href="{{ route('deleteNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/delete.png" title="{{ __('Delete Nominee') }}"/></a></th>								
+										<td><a href="{{ route('addEditNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/edit.png" title="{{ __('Edit Nominee') }}" /></a></td>
+										<td><a href="{{ route('deleteNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/delete.png" title="{{ __('Delete Nominee') }}"/></a></td>								
 									</tr>
 									@php ($cnt++)
 								@endforeach
 							</tbody>
 						</table>
-						
 					</div>
 				</div>
 			</div>

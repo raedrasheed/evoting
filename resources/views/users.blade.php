@@ -13,9 +13,10 @@
 						</div>
 					</div>
 					<div class="card-body data-table-div">
-						<table class="data-table">	
+						<input class="myInput" type="text" id="myInput" onkeyup="myFunction()" placeholder="{{ __('Search..') }}" title="{{ __('Search..') }}">
+						<table id="myTable">
 							<thead>
-								<tr>
+								<tr class="header">
 									<th>#</th>
 									<th>{{ __('Photo') }}</th>
 									<th>{{ __('Outer ID') }}</th>
@@ -32,26 +33,23 @@
 							<tbody>			
 								@php ($cnt=1)
 								@foreach ($users as $user)
-									<tr class="raw-shadow">
-										<th>{{ $cnt }}</th>
-										<th><img class="nominee-photo" src="{{ asset($user->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></th>
+									<tr>
+										<td>{{ $cnt }}</th>
+										<td><img class="nominee-photo" src="{{ asset($user->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></td>
 										<td>{{ $user->outer_id }}</td>
 										<td>{{ $user->name }}</td>
 										<td>{{ $user->username }}</td>
-										<td>@if ($user->role == 1) {{ __('Administrator') }} @elseif ($user->role == 2) {{ __('Regular') }} @endif</th>
-										<th>@if ($user->voted == 1) {{ __('Yes') }} @else {{ __('No') }} @endif</td>
+										<td>@if ($user->role == 1) {{ __('Administrator') }} @elseif ($user->role == 2) {{ __('Regular') }} @endif</td>
+										<td>@if ($user->voted == 1) {{ __('Yes') }} @else {{ __('No') }} @endif</td>
 										<td>{{ $user->description }}</td>
 										<td>{{ $user->mobile }}</td>
-										<th><a href="{{ route('logs', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/log.png') }}" title="{{ __('Show User Logs') }}"/></a></th>
-										<th><a href="{{ route('addEditUser', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/edit.png') }}" title="{{ __('Edit User') }}"/></a></th>
+										<td><a href="{{ route('logs', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/log.png') }}" title="{{ __('Show User Logs') }}"/></a></td>
+										<td><a href="{{ route('addEditUser', [ 'id'=> $user->id ]) }}"><img class="m-icon" src="{{ asset('imgs/edit.png') }}" title="{{ __('Edit User') }}"/></a></td>
 									</tr>
 									@php ($cnt++)
 								@endforeach								
 							</tbody>
 						</table>
-						<p>
-							{!! $users->links() !!}
-						</p>
 					</div>
 				</div>
 			</div>
