@@ -121,6 +121,7 @@
 			</div>
 		</div>	
 	</div>
+
 @elseif (Carbon\Carbon::parse(config('settings.votingStartTime'))->gt($now)  && !$maintenance)
 	<div class="container">		
 		<div class="row justify-content-center">
@@ -387,7 +388,6 @@
 					  alert(error);
 					}
 				}); 
-							
 		} 
 		else {     
 			swal("{{ __('Vote not saved') }}", "{{ __('You can continue voting') }}", "error");   

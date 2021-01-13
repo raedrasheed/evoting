@@ -17,4 +17,5 @@ return [
 	'listsInRawWidthInVoteCards' => '4',
 	'viewListImageInVoteCards' => 0,
 	'resultForEachList' => 0,
+
 ];

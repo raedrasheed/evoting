@@ -101,8 +101,7 @@
                 </div>-->
 				<div class="links">
                     <a>{{ __('Voting Time') }}</a>
-                </div>
-				
+                </div>			
 				<div class="links">
                     <a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
                     <a> {{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
@@ -112,7 +111,6 @@
 					    <p><br/></p>
                     <a  style="color:#F00;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
                 </div>
-                
             </div>
         </div>
     </body>
