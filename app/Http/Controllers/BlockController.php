@@ -23,7 +23,6 @@ use App\Node008;
 use App\Node009;
 use App\Node010;
 
-
 /**
  * Class BlockController
  * @author  Raed Rasheed
