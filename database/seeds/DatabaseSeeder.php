@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'rrasheed',
             'password' => bcrypt('password'),
 			'role' => '1',
+			'is_active' => true,
 			'description' => 'System Administrator',
 			'mobile' => '0599345342',
 			'voted' => false,		
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'nfarahat',
             'password' => bcrypt('password'),
 			'role' => '2',
+			'is_active' => true,
 			'description' => 'Good man',
 			'mobile' => '0566345342',
 			'voted' => false,
@@ -39,15 +41,38 @@ class DatabaseSeeder extends Seeder
 		DB::table('nominees')->insert([
             'name' => 'Raed Rasheed',
 			'photo' => 'imgs\photos\1.jpg',            
-			'type' => '1',
+			'nominee_list_id' => '1',
+			'is_active' => true,
 			'description' => 'Good man',
         ]);
 		
 		DB::table('nominees')->insert([
             'name' => 'Naser Farahat',
 			'photo' => 'imgs\photos\2.jpg',            
-			'type' => '2',
+			'nominee_list_id' => '2',
+			'is_active' => true,
 			'description' => 'Good man',
+        ]);
+		DB::table('nominee_lists')->insert([
+            'name' => 'Presidential',
+			'photo' => 'imgs\photos\1.jpg', 
+			'selected_count' => 3, 
+			'is_active' => true,
+			'description' => 'Presidential List',
+        ]);
+		DB::table('nominee_lists')->insert([
+            'name' => 'Academic',
+			'photo' => 'imgs\photos\1.jpg', 
+			'selected_count' => 3, 
+			'is_active' => true,
+			'description' => 'Academic List',
+        ]);
+		DB::table('nominee_lists')->insert([
+            'name' => 'Administrative',
+			'photo' => 'imgs\photos\1.jpg', 
+			'selected_count' => 3, 
+			'is_active' => true,
+			'description' => 'Administrative List',
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'title' =>  'eVoting System',
+    'title' =>  'GoVote.Live',
 	'app_dir' =>  'ltr',
 ];

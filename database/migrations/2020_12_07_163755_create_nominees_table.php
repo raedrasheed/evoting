@@ -17,7 +17,8 @@ class CreateNomineesTable extends Migration
             $table->bigIncrements('id');
 			$table->string('name');
 			$table->string('photo');
-			$table->integer('type');
+			$table->integer('nominee_list_id');
+			$table->boolean('is_active')->nullable()->default(true);
 			$table->string('description')->nullable();
             $table->timestamps();
         });

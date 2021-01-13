@@ -7,8 +7,10 @@ use App\Block;
 use Carbon\Carbon;
 use App\User;
 use App\Voted;
-
+use Config;
 use App\Log;
+use App\PoolOfVote;
+
 use Auth;
 use App\Node001;
 use App\Node002;
@@ -21,79 +23,166 @@ use App\Node008;
 use App\Node009;
 use App\Node010;
 
+
+/**
+ * Class BlockController
+ * @author  Raed Rasheed
+ * The Block Controller manage blockchain
+**/
+
 class BlockController extends Controller
 {
-    //
-	public function addBlock(Request $request)
-    {
+     /**
+     * addVote Method
+     * @param $request
+     * @return String
+    **/
+	public function addVote(Request $request){
+		/* Get user id from the request */
 		$id = $request->input('id');
-		
+		/* Search the user from DB */
 		$user = User::find($id);
+		/* Check if user already voted */
 		$vodted = Voted::where('user_id',$id)->first();
-
+		/* Get current timestamp */
+        $now = Carbon::now();
 		
-		if($vodted==""){
-		   
+		/* Returen messages */
+		$resultOk = array('message' => 'Vote saved successfully!');
+		$resultError = array('message' => 'Sorry, Vote not saved!');
+		
+		/* If user not voted before 							 */
+		/*		   and strat voting time less than current time  */
+		/*		   and end voting time greater than current time */
+		
+		if($vodted=="" && Carbon::parse(config('settings.votingStartTime'))->lt($now) && Carbon::parse(config('settings.votingEndTime'))->gt($now) ){
+		
+			/* To prevent user from voting twise  */
+			/* we create a Blokchain for user     */
+			/* voting processing to check if user */
+			/* has been voted before or not       */
+			
+			/* Create new voted block */
 			$newVoted = new Voted();
-			$vodteds = Voted::first();
-			if($vodteds != ""){	
+			$voteds = Voted::first();
+			/* Check if this user is the first user voted*/
+			if($voteds != ""){
+				
+				/* If user is not the first voter  */
+				/* get the last voted hash and put */ 
+				/* it in the new voted block       */
+				
 				$lastVoted = Voted::latest()->first();				
 				$newVoted->previous_hash = $lastVoted->hash;
 			}else{
+				
+				/* If user is the first voter put */
+				/* ZERO in the new voted block    */
+				
 				$newVoted->previous_hash = "0";						
 			}
 			
+			/* Save the user data into the voted  */
+			/* Blockchain						  */
+			/* user id,							  */
+			/* user name, 						  */
+			/* the has of current block, and 	  */
+			/* the difficulty target			  */
+			/* As we save the previous block hash */
 			
 			$newVoted->user_id = Auth::user()->id;
 			$newVoted->user_name = Auth::user()->username;
-			$stringToHash = $newVoted->user_id . $newVoted->user_name . $newVoted->previous_hash;
+			$stringToHash = $newVoted->user_id . $newVoted->user_name . Carbon::now()->timestamp . $newVoted->previous_hash;
 			$newVoted->hash = hash('sha256',$stringToHash);
-			$newVoted->difficulty_target = 3;
+			$newVoted->difficulty_target = config('settings.__difficulty_target');
 			$newVoted->save();
 			
-				
+			/* Set the voted flag in the user table to 1 = (true) */
 			$user->voted = 1;
 			$user->save();
 			
-			// return "Hi..".$newVoted->user_id;	
+			/* Save the current event in the Log table */
+			$this->addLog("Voting...");
 			
-			$log = new Log();
-			$log->user_id = Auth::user()->id;
-			$log->action = "Voting";
-			$log->time = Carbon::now();
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$MAC = exec('getmac');
-			$MAC = strtok($MAC, ' '); 
-			$log->mac = $MAC;
-			$log->save();
+			/* Insert the vote into the vote Pool */
+			$PoolOfVote = new PoolOfVote();
+			$PoolOfVote->vote = $request->input('voteJSON');
+			$PoolOfVote->save();
 			
+			return "Vote saved successfully!";				
+		}else{
+			return "Sorry, Vote not saved!";
+		}
+	}
+	/**
+     * buildBlockchain Method
+     * @param None
+     * @return String
+    **/
+	public function buildBlockchain(){
+		$poolOfVote = PoolOfVote::first();
+		if($poolOfVote){
+			/* Get the first vote in the vote Pool			*/
+			while($poolOfVote = PoolOfVote::first()){
+				/* Get the vote JSON */
+				$this->addBlock($poolOfVote->vote);					
+				$poolOfVote->delete();
+				sleep(config('settings.__sleepTime'));
+			}
+			return "Block(s) created successfully";
+		}else{
+			return "No votes in voting pool";
+		}
+	}
+	/**
+     * addBlock Method
+     * @param __vote (JSON format of the vote detials)
+     * @return integer
+    **/
+	public function addBlock($__vote){		
 		
+		
+		/* Do that while there are votes in the Pool	*/
+		if($__vote){			
+			
+			/* Create new block for the main voting Blockchain */
 			$lastBlock = Block::latest()->first();
 			
-			$version = "1.0";
+			/* Save the voting data into the main */
+			/* Blockchain:						  */
+			/* current version, 				  */
+			/* previous block hash,		 	      */
+			/* timestamp,  						  */
+			/* difficulty target,			      */
+			/* nonce, 					          */
+			/* current block hash		          */
+			
+			$version = Config::get('settings.__version__');
+			
+			/* If this is not the first block get */
+			/* the previous block hash else set   */
+			/* the previous block to ZERO  		  */
 			if($lastBlock)
 				$previous_block_hash = $lastBlock->block_hash;
 			else $previous_block_hash = '0';
-			$vote_hash = hash('sha256',$request->input('voteJSON'));
-			$timestamp = Carbon::now()->timestamp;		
-			$difficulty_target = 3;
 			
+			/* Get user voting (data) hash */
+			$vote_hash = hash('sha256',$__vote);
+			
+			/* Get current timestamp */			
+			$timestamp = Carbon::now()->timestamp;	
+			
+			/* Get the default difficulty target */			
+			$difficulty_target = Config::get('settings.__difficulty_target');
+			
+			/* Get the the nonce */			
 			$nonce = $this->blockMining($version, 
 										$previous_block_hash,
 										$vote_hash,
 										$timestamp,
-										$difficulty_target);
-			
-			/*$version = $request->input('version');
-			$previous_block_hash = $request->input('previous_block_hash');
-			$vote_hash = $request->input('vote_hash');
-			$timestamp = $request->input('timestamp');
-			$difficulty_target = $request->input('difficulty_target');
-			$nonce = $request->input('nonce');*/
-			
-			//$block_header = $request->input('block_headerJSON');
-			//$block_hash = $request->input('block_hash');
-			
+										$difficulty_target);	
+								
+			/* Set the current block header data as JSON format */			
 			$block_header =    '{"version" : "'.$version.'",'.
 								'"previous_block_hash": "'.$previous_block_hash.'",'.
 								'"vote_hash": "'.$vote_hash.'",'.
@@ -102,103 +191,120 @@ class BlockController extends Controller
 								'"nonce": "'.$nonce.'"'.
 								'}';
 								
+			/* Get current block hash */
 			$block_hash = hash('sha256',$block_header);
 			
+			/* Get memory usage before create the block */
+			$memory_befor = memory_get_usage();
+			
 			$block = new Block();		
-			$block->block_size = 4;
 			$block->block_header = $block_header;
-			$block->vote = $request->input('voteJSON');
-			$block->block_hash = $block_hash;
+			$block->vote = $__vote;
+			$block->block_hash = $block_hash;	
+			
+			/* Set block size by subtract berfore memory */
+			/* usage from the current memory usage       */
+			$blockSize = memory_get_usage() - $memory_befor;
+			$block->block_size = $blockSize;	
+			
 			$block->save();
 			
+			/* Simulate the distributed Blockchain by   */
+			/* copy the new block into distributed DBs  */
+			/* there are 10 nodes not included the main */
+
 			$node001 = new Node001();		
-			$node001->block_size = 4;
+			$node001->block_size = $blockSize;
 			$node001->block_header = $block_header;
-			$node001->vote = $request->input('voteJSON');
+			$node001->vote = $__vote;
 			$node001->block_hash = $block_hash;
 			$node001->save();
 			
 			$node002 = new Node002();		
-			$node002->block_size = 4;
+			$node002->block_size = $blockSize;
 			$node002->block_header = $block_header;
-			$node002->vote = $request->input('voteJSON');
+			$node002->vote = $__vote;
 			$node002->block_hash = $block_hash;
 			$node002->save();
 			
 			$node003 = new Node003();		
-			$node003->block_size = 4;
+			$node003->block_size = $blockSize;
 			$node003->block_header = $block_header;
-			$node003->vote = $request->input('voteJSON');
+			$node003->vote = $__vote;
 			$node003->block_hash = $block_hash;
 			$node003->save();
 			
 			$node004 = new Node004();		
-			$node004->block_size = 4;
+			$node004->block_size = $blockSize;
 			$node004->block_header = $block_header;
-			$node004->vote = $request->input('voteJSON');
+			$node004->vote = $__vote;
 			$node004->block_hash = $block_hash;
 			$node004->save();
 			
 			$node005 = new Node005();		
-			$node005->block_size = 4;
+			$node005->block_size = $blockSize;
 			$node005->block_header = $block_header;
-			$node005->vote = $request->input('voteJSON');
+			$node005->vote = $__vote;
 			$node005->block_hash = $block_hash;
 			$node005->save();
 			
 			$node006 = new Node006();		
-			$node006->block_size = 4;
+			$node006->block_size = $blockSize;
 			$node006->block_header = $block_header;
-			$node006->vote = $request->input('voteJSON');
+			$node006->vote = $__vote;
 			$node006->block_hash = $block_hash;
 			$node006->save();
 			
 			$node007 = new Node007();		
-			$node007->block_size = 4;
+			$node007->block_size = $blockSize;
 			$node007->block_header = $block_header;
-			$node007->vote = $request->input('voteJSON');
+			$node007->vote = $__vote;
 			$node007->block_hash = $block_hash;
 			$node007->save();
 			
 			$node008 = new Node008();		
-			$node008->block_size = 4;
+			$node008->block_size = $blockSize;
 			$node008->block_header = $block_header;
-			$node008->vote = $request->input('voteJSON');
+			$node008->vote = $__vote;
 			$node008->block_hash = $block_hash;
 			$node008->save();
 			
 			$node009 = new Node009();		
-			$node009->block_size = 4;
+			$node009->block_size = $blockSize;
 			$node009->block_header = $block_header;
-			$node009->vote = $request->input('voteJSON');
+			$node009->vote = $__vote;
 			$node009->block_hash = $block_hash;
 			$node009->save();
 			
 			$node010 = new Node010();		
-			$node010->block_size = 4;
+			$node010->block_size = $blockSize;
 			$node010->block_header = $block_header;
-			$node010->vote = $request->input('voteJSON');
+			$node010->vote = $__vote;
 			$node010->block_hash = $block_hash;
 			$node010->save();
-			
-			return "Block created successflly.";			
+			return 1;
 		}else{
-			return "Can't create block for same voter.";
-		}
-		
+			return 0;
+		}			
     }
-	
-	private function blockMining($version, 
+	/**
+     * blockMining Method
+     * @param version, previous_block_hash, vote_hash, timestamp, difficulty_target
+     * @return integer (the nonce)
+    **/
+	public function blockMining($version, 
 								$previous_block_hash,
 								$vote_hash,
 								$timestamp,
-								$difficulty_target)
-    {
-		
+								$difficulty_target){
+		/* Set the difficulty string */
 		$stratZero = '';
 		for($cnt=0; $cnt < $difficulty_target; $cnt++)
 			$stratZero = $stratZero.'0';
+		/* Start to check the nonce */
 		$nonce = 0;
+		/* Loop while not reach the right nonce   */
+		/* which can be add to get the right hash */
 		while(1){						
 			$nonce++;
 			$block_header = '{"version" : "'.$version.'",'.
@@ -209,13 +315,44 @@ class BlockController extends Controller
 							'"nonce": "'.$nonce.'"'.
 							'}';
 				if(starts_with(hash('sha256',$block_header), $stratZero))
+				/* Break the loop when find the right nonce*/
 					break;
 		}
-		
+		/* return the current block nonce */
 		return $nonce;
 	}
-	
+	/**
+     * blockchainExplorer Page
+     * @param None
+     * @return the blocks of the blockchain to the view blockchainExplorer
+    **/
+	public function blockchainExplorer(){
+		/* Explore the Blockchain */
+		
+		/* Save the current event in the Log table */
+		$this->addLog("View Blockchain Explorer");
+		
+		/* Check the integrity of Blockchain  */
+		$fine = $this->blockchainValid();
+
+		/* Retrive the blocks from Blockchain  */
+		$blocks = Block::paginate(15);
+			
+		/* Call the view to explore blocks from Blockchain  */
+        return view('blockchainExplorer',compact('fine','blocks'));
+    }
+	/**
+     * refineBlockchain Page
+     * @param None
+     * @return the blocks of the blockchain to the view blockchainExplorer
+    **/
 	public function refineBlockchain(){
+		/* Check the Blockchain integrity by   */
+		/* checking the hash of distributed    */
+		/* nodes and choose the (50%+1) of all */
+		/* nodes then redistribute the (50%+1) */
+		/* Blockchain to others nodes		   */
+
 		$blocks = Block::all();
 		$node001s = Node001::all();
 		$node002s = Node002::all();
@@ -227,11 +364,15 @@ class BlockController extends Controller
 		$node008s = Node008::all();
 		$node009s = Node009::all();
 		$node010s = Node010::all();
-		
+
+		/* Array of all node hashes */
 		$nodesHash = array();
-		$numberOfNodes = 11;
+		/* Get number of nodes */
+		$numberOfNodes = config('settings.__number_of_nodes');;
+		
 		$validHash = '';
 		
+		/* Get nodes hashes and insert them into hash array */
 		array_push($nodesHash, hash('sha256',$blocks));
 		array_push($nodesHash, hash('sha256',$node001s));
 		array_push($nodesHash, hash('sha256',$node002s));
@@ -244,16 +385,21 @@ class BlockController extends Controller
 		array_push($nodesHash, hash('sha256',$node009s));
 		array_push($nodesHash, hash('sha256',$node010s));
 		
+		/* Calculate how many each hash repeated in the array */
 		$hashCounters = array_count_values($nodesHash);
-		
+
+		/* Get the most repeated hash (valid hash) */
 		foreach($hashCounters as $key => $hashCounter){
 			if($hashCounter >= intval($numberOfNodes / 2 + 1) ){
 				$validHash = $key;
 				break;
 			}
 		}
+		
+		/* Get the index of the node with valid hash */
 		$fineNodeHashIndex = array_search($validHash, $nodesHash);		
 		
+		/* Replicate all nodes with the node of valid hash */
 		switch($fineNodeHashIndex){
 			case 0:	if($validHash != hash('sha256',$node001s)){
 						Node001::truncate();
@@ -709,16 +855,23 @@ class BlockController extends Controller
 			
 		}
 		
+		/* Check the integrity of Blockchain  */
 		$fine = $this->blockchainValid();
-		$blocks = Block::paginate(10);
-			
+
+		/* Retrive the blocks from Blockchain  */
+		$blocks = Block::paginate(15);
+		
+		/* Call the view to explore blocks from Blockchain  */
         return view('blockchainExplorer',compact('fine','blocks'));
 		
-		
 	}
-	
+	/**
+     * blockchainValid Method
+     * @param None
+     * @return integer
+    **/
 	public function blockchainValid(){
-		
+		/* Check the integrity of Blockchain  */
 		$blocks = Block::all();
 		$prevBlock = 0;
 		$error = false;
@@ -737,13 +890,29 @@ class BlockController extends Controller
 				}elseif(hash('sha256',$prevBlock->block_header) != $block_header["previous_block_hash"]){
 					$error = true;
 					break;
-				}				
+				}			
 			}
 			$prevBlock = $block;
 		}
 		
 		return !$error;
 	}
-	
+	/**
+     * addLog Method
+     * @param action
+     * @return void
+    **/
+	public function addLog($action){
+		$log = new Log();
+		$log->user_id = Auth::user()->id;
+		$log->action = $action;
+		$log->time = Carbon::now();
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$MAC = exec('getmac');
+		$MAC = strtok($MAC, ' '); 
+		$log->mac = $MAC;
+		$log->save();
+		
+	}
 	
 }

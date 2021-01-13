@@ -38,7 +38,7 @@
 										echo "<span style='color:#e74c3c;'>";
 									}else{
 										echo "<span style='color:#38c172;'>";
-									}										
+									}
 								}
 								$prevBlock = $block;
 							?>
@@ -47,10 +47,11 @@
 							</p>
 						@endforeach		
 					</div>
+					
+					<p>
+						    {{ $blocks->links() }}
+						</p>
 				</div>
-				<p>
-					{!! $blocks->links() !!}
-				</p>
 			</div>
 		</div>	
 	</div>

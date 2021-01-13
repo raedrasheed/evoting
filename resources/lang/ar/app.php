@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'title' =>  'نظام الإنتخاب الإلكتروني',
+    'title' =>  'GoVote.Live',
 	'app_dir' =>  'rtl',
 ];

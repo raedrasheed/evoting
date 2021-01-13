@@ -13,7 +13,7 @@
                         @csrf
 							<input type="hidden" id="id" name="id" value="@if(isset($user)){{ $user->id }}@else{{ __('0') }}@endif"/>
 							<div class="form-group row">
-								<label for="outer_id" class="col-md-4 col-form-label text-md-right">{{ __('Outer ID') }}</label>
+								<label for="outer_id" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Outer ID') }}</label>
 
 								<div class="col-md-8">
 									<input id="outer_id" type="text" class="form-control @error('outer_id') is-invalid @enderror" name="outer_id" value="@if(isset($user)){{ $user->outer_id }}@else{{ old('outer_id') }}@endif" required autocomplete="name" autofocus>
@@ -26,7 +26,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+								<label for="name" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Name') }}</label>
 
 								<div class="col-md-8">
 									<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="@if(isset($user)){{ $user->name }}@else{{ old('name') }}@endif" required autocomplete="name" autofocus>
@@ -39,7 +39,7 @@
 								</div>
 							</div>
 							 <div class="form-group row">
-								<label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
+								<label for="photo" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Photo') }}</label>
 
 								<div class="col-md-8">
 									<label for="photo"><img id="photoImg" src="@if(isset($user)){{ asset($user->photo) }}@else{{ old('photo') }}@endif" style="width:100px;height:100px; border: solid 2px #000;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';" /></label>
@@ -52,7 +52,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+								<label for="username" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Username') }}</label>
 
 								<div class="col-md-8">
 									<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="@if(isset($user)){{ $user->username }}@else{{ old('username') }}@endif" required autocomplete="username" autofocus>
@@ -65,7 +65,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+								<label for="password" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Password') }}</label>
 
 								<div class="col-md-8">
 									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="@if(isset($user)){{ $user->password }}@else{{ old('password') }}@endif" required autocomplete="password" autofocus>
@@ -78,7 +78,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="role" class="col-md-4 col-form-label text-md-right">{{ __('User Role') }}</label>
+								<label for="role" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('User Role') }}</label>
 
 								<div class="col-md-8">
 									<select id="role" class="js-example-basic-single form-control @error('role') is-invalid @enderror" name="role" value="@if(isset($user)){{ $user->role }}@else{{ old('role') }}@endif" required autocomplete="role" autofocus>
@@ -94,7 +94,18 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+								<label for="is_active" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Active') }}</label>
+								<div class="col-md-8">
+									<input id="is_active" type="checkbox" class="form-control @error('is_active') is-invalid @enderror" name="is_active" @if(isset($user))@if($user->is_active) {{ _('checked') }} @endif @endif  autocomplete="is_active" autofocus>
+									@error('is_active')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="description" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Description') }}</label>
 
 								<div class="col-md-8">
 									<input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="@if(isset($user)){{ $user->description }}@else{{ old('description') }}@endif" required autocomplete="description" autofocus>
@@ -107,7 +118,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
+								<label for="mobile" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Mobile') }}</label>
 
 								<div class="col-md-8">
 									<input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="@if(isset($user)){{ $user->mobile }}@else{{ old('mobile') }}@endif" required autocomplete="description" autofocus>

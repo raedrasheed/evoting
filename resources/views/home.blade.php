@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@php ($now = Carbon\Carbon::now())
+@php ($now->addHours(2))
+@php ($defualtPhoto = 'imgs/photos/photo.jpg')
+@php ($maintenance = (int) config('settings.maintenance'))
 @if (Auth::user()->role == 1)
 	<div class="container">		
 		<div class="row justify-content-center">
@@ -8,173 +12,319 @@
 				<div class="card">
 					<div class="card-header"><b>{{ trans('app.title') }}</b></div>
 					<div class="card-body">
-						 <h4>@lang('Welcome')</h4>
-						 <p>{{ __('Election Commission') }}</p>
-                         <p>{{ __('Islamic University of Gaza') }}</p>
+						 <h4>@lang('Welcome') {{ Auth::user()->name }} </h4>
 						 <div class="links">
-							<a>{{ __('Voting Time') }}</a>:
-							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p>
+    							<a>{{ __('Voting Time') }}</a>:---<br/>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }}</a>
+							</p>
 						</div>
+						<div class="links">
+							<p>
+    						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+							</p>
+						</div>
+						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
                     
 					</div>
 				</div>
+				<div class="card">
+					<div class="card-header">
+					<b>{{ __('Statistics') }}</b>			
+					</div>
+					<div class="card-body">
+    					<div class="form-group row">						
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $allVoters }}" data-percent-count="{{ $allVoters }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('All Voters') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Total Votes') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $votingPrecentage }}" data-percent-count="{{ $votingPrecentage }}">
+    							<div class="stat-percent-circle">0						 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Voting Precentage') }}
+    							</div>							
+    						</div>
+    					</div>
+    				</div>
+    			</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Auth::user()->voted == 1)
+@elseif ($votedFlag == 1  && !$maintenance)
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<div class="card-header">{{ __('Notes') }}</div>
+					<div class="card-header"><b>{{ __('Notes') }}</b></div>
 					<div class="card-body">
+					    <h4>@lang('Welcome') {{ Auth::user()->name }}</h4>
 						{{ __('You have finish your vote') }}
 						 <div class="links">
-							<a>{{ __('Voting Time') }}</a>:
-							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p>
+    							<a>{{ __('Voting Time') }}</a>:<br/>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }}</a>
+							</p>
 						</div>
+						<div class="links">
+							<p>
+    						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+							</p>
+						</div>
+						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
 					</div>
 				</div>
+				<div class="card">
+					<div class="card-header">
+					<b>{{ __('Statistics') }}</b>			
+					</div>
+					<div class="card-body">
+    					<div class="form-group row">						
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $allVoters }}" data-percent-count="{{ $allVoters }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('All Voters') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Total Votes') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $votingPrecentage }}" data-percent-count="{{ $votingPrecentage }}">
+    							<div class="stat-percent-circle">0						 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Voting Precentage') }}
+    							</div>							
+    						</div>
+    					</div>
+    				</div>
+    			</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Carbon\Carbon::parse(config('settings.votingStartTime'))->gt(Carbon\Carbon::now()))
+@elseif (Carbon\Carbon::parse(config('settings.votingStartTime'))->gt($now)  && !$maintenance)
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<div class="card-header">{{ __('Notes') }}</div>
+					<div class="card-header"><b>{{ __('Notes') }}</b></div>
 					<div class="card-body">
-						<h4>@lang('Welcome')</h4>
+						<h4>@lang('Welcome') {{ Auth::user()->name }}</h4>
 						{{ __('Voting not opened yet') }}
 						 <div class="links">
-							<a>{{ __('Voting Time') }}</a>:
-							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p>
+    							<a>{{ __('Voting Time') }}</a>:<br/>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }}</a>
+							</p>
 						</div>
+						<div class="links">
+							<p>
+    						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+							</p>
+						</div>
+						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
 					</div>
 				</div>
+				<div class="card">
+					<div class="card-header">
+					<b>{{ __('Statistics') }}</b>			
+					</div>
+					<div class="card-body">
+    					<div class="form-group row">						
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $allVoters }}" data-percent-count="{{ $allVoters }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('All Voters') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Total Votes') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $votingPrecentage }}" data-percent-count="{{ $votingPrecentage }}">
+    							<div class="stat-percent-circle">0						 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Voting Precentage') }}
+    							</div>							
+    						</div>
+    					</div>
+    				</div>
+    			</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt(Carbon\Carbon::now()))
+@elseif (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now)  && !$maintenance)
 	<div class="container">		
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<div class="card-header">{{ __('Notes') }}</div>
+					<div class="card-header"><b>{{ __('Notes') }}</b></div>
 					<div class="card-body">
-						<h4>@lang('Welcome')</h4>
+						<h4>@lang('Welcome') {{ Auth::user()->name }}</h4>
 						{{ __('Voting ended') }}
 						 <div class="links">
-							<a>{{ __('Voting Time') }}</a>:
-							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} {{ __('To') }} {{ config('settings.votingEndTime') }}</a>
+							<p>
+    							<a>{{ __('Voting Time') }}</a>:<br/>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }}</a>
+							</p>
 						</div>
+						<div class="links">
+							<p>
+    						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+							</p>
+						</div>
+						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
 					</div>
 				</div>
+				<div class="card">
+					<div class="card-header">
+					<b>{{ __('Statistics') }}</b>			
+					</div>
+					<div class="card-body">
+    					<div class="form-group row">						
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $allVoters }}" data-percent-count="{{ $allVoters }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('All Voters') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
+    							<div class="stat-count-circle">0							 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Total Votes') }}
+    							</div>							
+    						</div>
+    						<div class="stat-circle stat-main col-md-4" data-count="{{ $votingPrecentage }}" data-percent-count="{{ $votingPrecentage }}">
+    							<div class="stat-percent-circle">0						 
+    							</div>
+    							<div class="stat-main-container">
+    							{{ __('Voting Precentage') }}
+    							</div>							
+    						</div>
+    					</div>
+    				</div>
+    			</div>
 			</div>
 		</div>	
 	</div>
-@elseif (Auth::user()->voted == 0)
+@elseif (Auth::user()->voted == 0  && Auth::user()->is_active == true  && !$maintenance /*|| Auth::user()->id == 290*/)
 	<div class="container">		
 		<div class="row justify-content-center">
-			<div class="col-md-4 top-padding-15">
-				<div class="card">
-					<div class="card-header">{{ __('Presidential Nominees') }}</div>
-					<div class="card-body">
-						@foreach ($presidentialNominees as $presidentialNominee)
-							<div class="raw raw-shadow top-bottom-padding-10">
-								<label>
-									<input id="{{ $presidentialNominee->id }}" name="{{ $presidentialNominee->id }}" type="checkbox" class="option-input checkbox presidential-nominees" onchange="validate(this,1)" />							
-								</label>
-								<img class="nominee-photo" src="{{ asset($presidentialNominee->photo) }}"/><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $presidentialNominee->name }}						
+			@foreach ($lists as $key=>$list)
+				@if($list->count()>0)
+					<div class="col-md-{{config('settings.listsInRawWidth')}} top-padding-15">
+						<div class="card">
+							<div class="card-header">
+								@foreach ($nomineeLists as $nomineeList)
+									@if($nomineeList->id == $key)
+										{{ __($nomineeList->name) }}								
+										<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+											<img class="nominee-photo" src="{{ asset($nomineeList->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
+										</div>
+										@break
+									@endif
+								@endforeach
 							</div>
-						@endforeach	
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 top-padding-15">
-				<div class="card">
-					<div class="card-header">{{ __('Academic Members Nominees') }}</div>
-					<div class="card-body">
-						@foreach ($academicMemberNominees as $academicMemberNominee)
-							<div class="raw raw-shadow top-bottom-padding-10">
-								<label>
-									<input id="{{ $academicMemberNominee->id }}" name="{{ $academicMemberNominee->id }}" type="checkbox" class="option-input checkbox academic-members-nominees" onchange="validate(this,2)"/>							
-								</label>
-								<img class="nominee-photo" src="{{ asset($academicMemberNominee->photo) }}"/><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $academicMemberNominee->name }}						
+							<div class="card-body">
+								@foreach ($list as $nominee)
+									<div class="raw raw-shadow top-bottom-padding-10">
+										<label>
+											<input id="{{ $nominee->id }}" name="{{ $nominee->id }}" type="checkbox" class="option-input checkbox {{ $nomineeList->name }}-nominees" onchange="validate(this,{{ $nominee->nominee_list_id }})" />							
+										</label>
+										<img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span id="span{{ $nominee->id }}" data-list="{{ $nomineeList->name }}">{{ $nominee->name }}</span>						
+									</div>
+								@endforeach	
 							</div>
-						@endforeach						
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-4 top-padding-15">
-				<div class="card">
-					<div class="card-header">{{ __('Administrative Members Nominees') }}</div>
-					<div class="card-body">
-						@foreach ($administrativeMemberNominees as $administrativeMemberNominee)
-							<div class="raw raw-shadow top-bottom-padding-10">
-								<label>
-									<input id="{{ $administrativeMemberNominee->id }}" name="{{ $administrativeMemberNominee->id }}" type="checkbox" class="option-input checkbox administrative-members-nominees" onchange="validate(this,3)"/>							
-								</label>
-								<img class="nominee-photo" src="{{ asset($administrativeMemberNominee->photo) }}"/><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $administrativeMemberNominee->name }}						
-							</div>
-						@endforeach						
-					</div>
-				</div>
-			</div>
+				@endif
+			@endforeach
+		</div>
+		<div class="row justify-content-center">
+            <div class="col-md-12 top-padding-15">
+                <button onclick="JSalert()" class="btn btn-success btn-block" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+				{{ __('Vote') }}..
+				</button>
+            </div>
 		</div>
 	</div>
-	<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
-		{{ __('Vote') }}..
-	</button>
-			
 	<script type="text/javascript">
-	function validate(thisObj,type){
+	function validate(thisObj,listID){
 		var cnt=0;			
 		//alert(thisObj.checked);
-		if(type == 1){
-			$(".presidential-nominees").each(function () {
-				if($(this).prop('checked'))
-					cnt++;
-			  });
-			 if(cnt > 1){				
-				thisObj.checked=false;
-				swal("{{ __('Vote Error') }}", "{{ __('You can not voting more than one nominee') }}", "error");
-			 }
-		}else if(type == 2){
-			$(".academic-members-nominees").each(function () {
-				if($(this).prop('checked'))
-					cnt++;
-			  });
-			 if(cnt > 4){
-				 thisObj.checked=false;
-				swal("{{ __('Vote Error') }}", "{{ __('You can not voting more than 4 nominees') }}", "error");
-				
-			 }			
-		}else if(type == 3){
-			$(".administrative-members-nominees").each(function () {
-				if($(this).prop('checked'))
-					cnt++;
-			  });
-			 if(cnt > 4){
-				 thisObj.checked=false;
-				swal("{{ __('Vote Error') }}", "{{ __('You can not voting more than 4 nominees') }}", "error");
-				
-			 }			
-		}
+		@foreach ($nomineeLists as $nomineeList)
+			if(listID == {{ $nomineeList->id }}){
+				$(".{{ $nomineeList->name }}-nominees").each(function () {
+					if($(this).prop('checked'))
+						cnt++;
+				  });
+				 if(cnt > {{ $nomineeList->selected_count }}){				
+					thisObj.checked=false;
+					if({{ $nomineeList->selected_count }} > 1 && {{ $nomineeList->selected_count }} <= 10)
+						swal("{{ __('Vote Error') }}", "{{ __('You can not voting for more than') }} {{ $nomineeList->selected_count }} {{ __('nominees') }}", "error");
+					else
+						swal("{{ __('Vote Error') }}", "{{ __('You can not voting for more than') }} {{ $nomineeList->selected_count }} {{ __('nominee(s)') }}", "error");
+				 }
+			}
+		@endforeach
 	}
 	function JSalert(){
+		var verificationText = "<div class='row justify-content-center'><table width='70%' style='font-size:10px;'>";
+		var pres ="";
+		var cnt = 1;
+		$(".option-input").each(function () {
+				if($(this).prop("checked")){
+					
+					var spanID = "#span"+$(this).prop("id");
+					pres = $(spanID).attr("data-list");
+					verificationText = verificationText +"<tr><td>" + $(spanID).text() + "</td><td>" + pres + "</td></tr>";				
+				}
+				cnt++;
 				
-		swal({   title: "{{ __('Your vote will be saved!') }}",   
-		text: "{{ __('If YES, you will logout!') }}",   
-		type: "warning",   
+			});
+		verificationText = verificationText +"</tr></table></div>"
+				
+		swal({
+		html:true,
+		title: "{{ __('Your vote will be saved!') }}",   
+		text: verificationText,
+		type: "",     
 		showCancelButton: true,   
 		confirmButtonColor: "#38c172",   
-		confirmButtonText: "{{ __('Yes, save my vote') }}",   
-		cancelButtonText: "{{ __('I am not sure!') }}",   
+		confirmButtonText: "{{ __('Yes') }}",   
+		cancelButtonText: "{{ __('No') }}",   
 		closeOnConfirm: false,   
 		closeOnCancel: false }, 
 		function(isConfirm){   
@@ -202,38 +352,42 @@
 				var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 				$.ajax({
 					/* the route pointing to the post function */
-					url: '{{ route("addBlock") }}',
+					url: '{{ route("addVote") }}',
 					type: 'POST',
 					/* send the csrf-token and the input to the controller */
 					data: {_token: CSRF_TOKEN, voteJSON:voteJSON, voteJSONsha256:sha256(voteJSON), id:{{ Auth::user()->id }} },
-					dataType: 'JSON',
+					dataType: 'text',
 					/* remind that 'data' is the response of the AjaxController */
 					success: function (data) { 
-						alert('JSON Ok..');
+							//alert(data);
+							
+							if(data === 'Sorry, Vote not saved!'){
+								title = "{{ __('Sorry, Vote not saved!') }}";
+							}
+							else{
+								title = "{{ __('Vote saved successfully!') }}";
+							}
+						 swal({   title: title,   
+							text: "{{ __('Your account will locked permanently!') }}",   
+							type: "success",   
+							showCancelButton: false,   
+							confirmButtonColor: "#38c172",   
+							confirmButtonText: "{{ __('Yes') }}",   
+							//cancelButtonText: "{{ __('I am not sure!') }}",   
+							closeOnConfirm: false,   
+							closeOnCancel: false }, 
+							function(isConfirm){   
+								if (isConfirm){
+								 location.replace("{{ route('home') }}");    
+								}
+							});
+					},
+					 error: function(xhr, status, error) {
+					  var err = xhr.responseText;
+					  alert(error);
 					}
 				}); 
-				//swal("{{ __('Vote saved!') }}", "{{ __('Your account will locked permanently!') }}", "success");
-				//document.getElementById('logout-form').submit();
-				//location.replace("http://election.iugaza.edu.ps/home");
-		        swal({   title: "{{ __('Vote saved!') }}",   
-        		text: "{{ __('Your account will locked permanently!') }}",   
-        		type: "success",   
-        		showCancelButton: false,   
-        		confirmButtonColor: "#38c172",   
-        		confirmButtonText: "{{ __('Yes') }}",   
-        		//cancelButtonText: "{{ __('I am not sure!') }}",   
-        		closeOnConfirm: false,   
-        		closeOnCancel: false }, 
-        		function(isConfirm){   
-        			if (isConfirm){
-        		     location.replace("http://election.iugaza.edu.ps/home");    
-        		    }
-        		});
-			
-			 
-			
-			//var block_hash = sha256(block_header);
-				
+							
 		} 
 		else {     
 			swal("{{ __('Vote not saved') }}", "{{ __('You can continue voting') }}", "error");   
@@ -369,5 +523,118 @@
 			return result;
 		};
 	</script>
+@else
+	<div class="container">		
+	<div class="row justify-content-center">
+	<div class="col-md-8">
+    <div class="card">
+		<div class="card-header"><b>{{ trans('app.title') }}</b></div>
+        <div class="card-body justify-content-center">
+			<div class="row justify-content-center">
+                    <img src="imgs/iug_logo.png" width="40%">
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <br/><br/>
+                    <a>
+                      نظام الانتخاب الإلكتروني
+                    </a>
+                </P>
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <a>
+                       الموقع تحت الصيانة سنعود بعد دقائق
+                    </a>
+                </P>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
 @endif
 @endsection
+    	<script>
+    		setTimeout(function start() {
+    		  $(".stat-bar").each(function (i) {
+    			var $bar = $(this);
+    			$(this).append('<span class="stat-count" style="{{(App::isLocale("ar") ? "left" : "right")}}:0.25em"></span>');
+    			$(this).append('<span class="stat-count-pers" style="{{(App::isLocale("ar") ? "left" : "right")}}:-3.2em"></span>');
+    			setTimeout(function () {
+    			  $bar.css("width", $bar.attr("data-percent"));
+    			}, i * 100);
+    		  });
+    
+    		  $(".stat-count").each(function () {
+    			$(this)
+    			  .prop("Counter", 0)
+    			  .animate(
+    				{
+    				  Counter: $(this).parent(".stat-bar").attr("data-percent-count")
+    				},
+    				{
+    				  duration: 2000,
+    				  easing: "swing",
+    				  step: function (now) {
+    					$(this).text(Math.ceil(now));
+    				  }
+    				}
+    			  );
+    		  });
+    		  
+    		  $(".stat-count-pers").each(function () {
+    			$(this)
+    			  .prop("Counter", 0)
+    			  .animate(
+    				{
+    				  Counter: $(this).parent(".stat-bar").attr("data-percent")
+    				},
+    				{
+    				  duration: 2000,
+    				  easing: "swing",
+    				  step: function (now) {
+    					$(this).text((Math.round(now*10)/10) + "%");
+    				  }
+    				}
+    			  );
+    		  });
+    		  
+    		  $(".stat-count-circle").each(function () {
+    			$(this)
+    			  .prop("Counter", 0)
+    			  .animate(
+    				{
+    				  Counter: $(this).parent(".stat-circle").attr("data-count")
+    				},
+    				{
+    				  duration: 2000,
+    				  easing: "swing",
+    				  step: function (now) {
+    					$(this).text(Math.ceil(now));
+    				  }
+    				}
+    			  );
+    		  });
+    		  
+    		   $(".stat-percent-circle").each(function () {
+    			$(this)
+    			  .prop("Counter", 0)
+    			  .animate(
+    				{
+    				  Counter: $(this).parent(".stat-circle").attr("data-percent-count")
+    				},
+    				{
+    				  duration: 2000,
+    				  easing: "swing",
+    				  step: function (now) {
+    					$(this).text((Math.round(now*10)/10) + "%");
+    				  }
+    				}
+    			  );
+    		  });
+    		  
+    		}, 500);
+    
+    
+    	</script>

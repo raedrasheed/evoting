@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Log;
 use App\Voted;
 use App\User;
+use Auth;
+use Hash;
 
 class LoginController extends Controller
 {
@@ -46,6 +48,84 @@ class LoginController extends Controller
 	{
 		return 'username';
 	}
+	
+	public function login(Request $request)
+    {
+     
+        $username = $request->username;
+        $password = $request->password;
+     
+      $user = User::where('username', $username)->first();
+      if(!$user){
+            return redirect()->back()->withInput($request->only('first_name', 'last_name'))->withErrors([
+            'username' => 'We could not find you in our database, if you think this is a mistake kindly contact the site administrators',
+                ]);
+      }else{
+          if($user->password){
+             if (Hash::check($password, $user->password)) {
+                    Auth::login($user);
+                    	$log = new Log();
+                		$log->user_id = $user->id;
+                		$log->action = "Login";
+                		$log->time = Carbon::now();
+                		$log->ip = $_SERVER['REMOTE_ADDR'];
+                		$MAC = exec('getmac');
+                		$MAC = strtok($MAC, ' '); 
+                		$log->mac = $MAC;
+                		
+                		$log->save();
+                    return redirect('/home');
+            }
+          }
+        }
+           return redirect()->back()->withInput($request->only('first_name', 'last_name'))->withErrors([
+            'username' => 'We could not find you in our database, if you think this is a mistake kindly contact the site administrators',
+                ]);
+      
+      
+      /*  LDAP Connection */
+       /* $adServer = "10.0.0.31";
+        $ldap = ldap_connect($adServer);
+        $username = $request->username;
+        $password = $request->password;
+    
+        $ldaprdn = 'IUG' . "\\" . $username;
+    
+        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+    
+        $bind = @ldap_bind($ldap, $ldaprdn, $password);
+    
+        if ($bind) {
+            $filter="(sAMAccountName=$username)";
+            $result = ldap_search($ldap,"dc=iugaza,dc=edu",$filter);
+            //ldap_sort($ldap,$result,"sn");
+            $info = ldap_get_entries($ldap, $result);
+           
+            @ldap_close($ldap);
+            
+            //$user = User::where('username', $username)->first();
+            
+            Auth::login($user);
+            $log = new Log();
+    		$log->user_id = $user->id;
+    		$log->action = "Login";
+    		$log->time = Carbon::now();
+    		$log->ip = $_SERVER['REMOTE_ADDR'];
+    		$MAC = exec('getmac');
+    		$MAC = strtok($MAC, ' '); 
+    		$log->mac = $MAC;
+    		
+    		$log->save();
+            return redirect('/home');
+        } else {
+             return redirect()->back()->withInput($request->only('first_name', 'last_name'))->withErrors([
+            'username' => 'We could not find you in our database, if you think this is a mistake kindly contact the site administrators',
+                ]);
+        }*/
+      /*******************/
+    }
+
 	
 	function authenticated(Request $request, $user)
 	{

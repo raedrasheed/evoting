@@ -14,7 +14,7 @@
 							<input type="hidden" id="id" name="id" value="@if(isset($nominee)){{ $nominee->id }}@else{{ __('0') }}@endif"/>
 							
 							<div class="form-group row">
-								<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+								<label for="name" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Name') }}</label>
 
 								<div class="col-md-8">
 									<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="@if(isset($nominee)){{ $nominee->name }}@else{{ old('name') }}@endif" required autocomplete="name" autofocus>
@@ -27,7 +27,7 @@
 								</div>
 							</div>
 							 <div class="form-group row">
-								<label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo') }}</label>
+								<label for="photo" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Photo') }}</label>
 
 								<div class="col-md-8">
 									<label for="photo"> 
@@ -42,16 +42,17 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Nomination Type') }}</label>
+								<label for="nominee_list_id" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Nominee List') }}</label>
 
 								<div class="col-md-8">
-									<select id="type" class="js-example-basic-single form-control @error('type') is-invalid @enderror" name="type" value="@if(isset($nominee)){{ $nominee->type }}@else{{ old('type') }}@endif" required autocomplete="type" autofocus>
+									<select id="nominee_list_id" class="js-example-basic-single form-control @error('nominee_list_id') is-invalid @enderror" name="nominee_list_id" value="@if(isset($nominee)){{ $nominee->nominee_list_id }}@else{{ old('nominee_list_id') }}@endif" required autocomplete="nominee_list_id" autofocus>
 										<option value="0">{{ __('Chose Option') }}...</option>
-										<option value="1" @if(isset($nominee)) @if($nominee->type == 1) {{ _('selected') }} @endif @else {{ old('type') }}@endif >{{ __('Presidential') }}</option>
-										<option value="2" @if(isset($nominee)) @if($nominee->type == 2) {{ _('selected') }} @endif @else {{ old('type') }}@endif >{{ __('Academic') }}</option>
-										<option value="3" @if(isset($nominee)) @if($nominee->type == 3) {{ _('selected') }} @endif @else {{ old('type') }}@endif >{{ __('Administrative') }}</option>
+										@foreach($nomineeLists as $nomineeList)
+											<option value="{{$nomineeList->id}}" @if(isset($nominee)) @if($nominee->nominee_list_id == $nomineeList->id) {{ _('selected') }} @endif @else {{ old('nominee_list_id') }}@endif >{{ __($nomineeList->name) }}</option>
+
+										@endforeach
 									</select>
-									@error('type')
+									@error('nominee_list_id')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
 										</span>
@@ -59,7 +60,20 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+								<label for="is_active" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Active') }}</label>
+
+								<div class="col-md-8 {{(App::isLocale('ar') ? ' text-md-right' : ' text-md-left')}}">
+									<input id="is_active" type="checkbox" class="form-control @error('is_active') is-invalid @enderror" name="is_active" @if(isset($nominee))@if($nominee->is_active) {{ _('checked') }} @endif @endif  autocomplete="is_active" autofocus>
+
+									@error('is_active')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="description" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Description') }}</label>
 
 								<div class="col-md-8">
 									<input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="@if(isset($nominee)){{ $nominee->description }}@else{{ old('description') }}@endif" required autocomplete="description" autofocus>
@@ -71,7 +85,6 @@
 									@enderror
 								</div>
 							</div>
-							
 							<div class="form-group row mb-0">
 								<div class="col-md-6">
 									<button type="submit" class="btn btn-primary btn-block">
