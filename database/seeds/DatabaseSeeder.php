@@ -17,25 +17,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Raed Rasheed',
 			'photo' => 'imgs\photos\1.jpg',
             'username' => 'rrasheed',
+            'email' => 'raed.rasheed@iugaza.edu.ps',
+            'email_verified_at' => '2021-01-01 00:00:01',
             'password' => bcrypt('password'),
 			'role' => '1',
 			'is_active' => true,
 			'description' => 'System Administrator',
 			'mobile' => '0599345342',
 			'voted' => false,		
-        ]);
-		
-		DB::table('users')->insert([
-			'outer_id' => '001',
-            'name' => 'Dr. Naser Farahat',
-			'photo' => 'imgs\photos\2.jpg',
-            'username' => 'nfarahat',
-            'password' => bcrypt('password'),
-			'role' => '2',
-			'is_active' => true,
-			'description' => 'Good man',
-			'mobile' => '0566345342',
-			'voted' => false,
         ]);
 		
 		DB::table('nominees')->insert([

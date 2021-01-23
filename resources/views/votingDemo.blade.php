@@ -2,7 +2,7 @@
 
 @section('content')
 @php ($now = Carbon\Carbon::now())
-@php ($now->addHours(2))
+
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
 @php ($maintenance = (int) config('settings.maintenance'))
 @if(!$maintenance)

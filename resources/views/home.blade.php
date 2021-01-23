@@ -2,7 +2,7 @@
 
 @section('content')
 @php ($now = Carbon\Carbon::now())
-@php ($now->addHours(2))
+
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
 @php ($maintenance = (int) config('settings.maintenance'))
 @if (Auth::user()->role == 1)
@@ -16,9 +16,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:---<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
 							</p>
 						</div>
 						<div class="links">
@@ -26,7 +26,7 @@
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
                     
 					</div>
 				</div>
@@ -40,7 +40,7 @@
     							<div class="stat-count-circle">0							 
     							</div>
     							<div class="stat-main-container">
-    							{{ __('All Voters') }}
+    							{{ __('All Users') }}
     							</div>							
     						</div>
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
@@ -75,9 +75,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
 							</p>
 						</div>
 						<div class="links">
@@ -85,7 +85,7 @@
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 					</div>
 				</div>
 				<div class="card">
@@ -98,7 +98,7 @@
     							<div class="stat-count-circle">0							 
     							</div>
     							<div class="stat-main-container">
-    							{{ __('All Voters') }}
+    							{{ __('All Users') }}
     							</div>							
     						</div>
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
@@ -134,9 +134,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
 							</p>
 						</div>
 						<div class="links">
@@ -144,7 +144,7 @@
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 					</div>
 				</div>
 				<div class="card">
@@ -157,7 +157,7 @@
     							<div class="stat-count-circle">0							 
     							</div>
     							<div class="stat-main-container">
-    							{{ __('All Voters') }}
+    							{{ __('All Users') }}
     							</div>							
     						</div>
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
@@ -192,9 +192,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
 							</p>
 						</div>
 						<div class="links">
@@ -202,7 +202,7 @@
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 					</div>
 				</div>
 				<div class="card">
@@ -215,7 +215,7 @@
     							<div class="stat-count-circle">0							 
     							</div>
     							<div class="stat-main-container">
-    							{{ __('All Voters') }}
+    							{{ __('All Users') }}
     							</div>							
     						</div>
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
@@ -463,7 +463,7 @@
 				}
 			}
 			
-			ascii += '\x80' // Append Ƈ' bit (plus zero padding)
+			ascii += '\x80' // Append ??' bit (plus zero padding)
 			while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
 			for (i = 0; i < ascii[lengthProperty]; i++) {
 				j = ascii.charCodeAt(i);
@@ -537,14 +537,14 @@
                 <P>
                     <br/><br/>
                     <a>
-                      نظام الانتخاب الإلكتروني
+                      ???????? ???????????????? ????????????????????
                     </a>
                 </P>
             </div>
             <div class="row justify-content-center">
                 <P>
                     <a>
-                       الموقع تحت الصيانة سنعود بعد دقائق
+                       ???????????? ?????? ?????????????? ?????????? ?????? ??????????
                     </a>
                 </P>
             </div>

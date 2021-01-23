@@ -2,7 +2,7 @@
 
 @section('content')
 @php ($now = Carbon\Carbon::now())
-@php ($now->addHours(2))
+
 @php ( $choiceElement = 'imgs/unchecked.png' )
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
 
@@ -137,7 +137,7 @@
 									<a>{{ __('Now') }}: {{ $now }}</a>
 								</p>
 							</div>
-							 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+							 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 						</div>
 					</div>
 				</div>
@@ -161,7 +161,7 @@
     							<a>{{ __('Now') }}: {{ $now }}</a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 					</div>
 				</div>
 			</div>

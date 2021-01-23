@@ -2,7 +2,7 @@
 
 @section('content')
 @php ($now = Carbon\Carbon::now())
-@php ($now->addHours(2))
+
 @if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now) )
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	@php ($defualtPhoto = 'imgs/photos/photo.jpg')
@@ -19,7 +19,7 @@
     							<div class="stat-count-circle">0							 
     							</div>
     							<div class="stat-main-container">
-    							{{ __('All Voters') }}
+    							{{ __('All Users') }}
     							</div>							
     						</div>
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $totalVotes }}" data-percent-count="{{ $totalVotes }}">
@@ -224,12 +224,12 @@
 							 <div class="links">
 								<p>
 									<a>{{ __('Voting Time') }}</a>:<br/>
-									<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-									<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-									<a>{{ __('Now') }}: {{ $now }}</a>
+									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+									<a>{{ __('Now') }}: {{ $now }} GTM</a>
 								</p>
 							</div>
-							 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+							 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 						</div>
 					</div>
 				</div>
@@ -248,12 +248,12 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
 							</p>
 						</div>
-						 <p>{{ __('Election committee') }} - {{ __('Islamic University - Gaza') }}</p>
+						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
 					</div>
 				</div>
 			</div>

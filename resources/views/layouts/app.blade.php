@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MLP61V0H3"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -9,7 +9,7 @@
       gtag('js', new Date());
     
       gtag('config', 'G-7MLP61V0H3');
-    </script>
+    </script>-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -52,19 +52,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                   
+					<ul class="nav navbar-nav">
+					</ul>
 					
-					  <!-- Right Side Of Navbar -->
-						
-					
-
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+						  @guest
+								<li class="nav-item">
+									<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+								</li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -79,6 +76,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{ route('home') }}">
+                                       {{ __('Home') }}
+                                    </a>
 									@if (Auth::user()->role == 1)
 									<a class="dropdown-item" href="{{ route('nomineeLists') }}">
                                        {{ __('Nominees Lists') }}
@@ -93,7 +93,7 @@
                                        {{ __('All Users') }}
                                     </a>
 									 <a class="dropdown-item" href="{{ route('buildBlockchain') }}">
-                                       {{ __('Build Blockchain') }}
+                                       {{ __('Mining Unmined Blocks') }}
                                     </a>
 									<a class="dropdown-item" href="{{ route('sendSMSForAll') }}">
                                        {{ __('Send SMS to non-voting users') }}
