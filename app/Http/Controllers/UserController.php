@@ -66,6 +66,7 @@ class UserController extends Controller
 			'outer_id' => 'required',
 			'name' => 'required',			
 			'username' => 'required',
+			'email' => 'required',
 			'password' => 'required',
 			'role' => 'required',
 			'mobile' => 'required'			
@@ -104,6 +105,7 @@ class UserController extends Controller
 		$user->name = $request->input('name');		
 		$user->photo = $photo;
 		$user->username = $request->input('username');
+		$user->email = $request->input('email');
 		$user->role = $request->input('role');
 		$user->is_active = ($request->input('is_active'))?true:false;
 		$user->description = $request->input('description');
@@ -124,6 +126,52 @@ class UserController extends Controller
 		return redirect()->route('users')->with( ['users' => $users] );
 		
     }
+	public function myProfile(){
+		$user = User::find(Auth::user()->id);	
+		return view('myProfile',compact('user'));
+		
+    }
+	
+	public function saveProfile(Request $request){
+		$user = User::find(Auth::user()->id);	
+		$this->validate($request, [
+			'name' => 'required',			
+			'password' => 'required',
+			'mobile' => 'required'			
+		]);
+		$photo = '';
+		
+		if($request->input('id')){
+			$user = User::find($request->input('id'));
+			$photo = $user->photo;
+			
+			if($user->password == $request->input('password'))
+				$user->password = $request->input('password');				
+			else
+				$user->password = Hash::make($request->input('password'));
+			
+			$this->addLog("Edit Profile: ".$user->name);
+			
+		}
+		
+		if($request->hasFile('photo')){
+			if ($request->file('photo')->isValid()) {				
+				$image_name = date('mdYHis') . uniqid() . $request->file('photo')->getClientOriginalName();
+				$path = 'imgs/photos';
+				$request->file('photo')->move($path,$image_name);
+				$photo = 'imgs/photos/'.$image_name;
+			}
+		}
+		
+		$user->name = $request->input('name');		
+		$user->photo = $photo;
+		$user->description = $request->input('description');
+		$user->mobile = $request->input('mobile');		
+		$user->save();
+		return view('myProfile',compact('user'));
+		
+    }
+	
 	public function addLog($action){
 		$log = new Log();
 		$log->user_id = Auth::user()->id;

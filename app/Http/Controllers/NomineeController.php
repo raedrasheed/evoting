@@ -25,18 +25,20 @@ class NomineeController extends Controller
 	 */
 	public function index(){
 		$this->addLog("View all nominees");		
-		$nominees = Nominee::orderBy('nominee_list_id', 'asc')->
-							orderBy('name')->					
-							get();		
+		$nominees = Nominee::orderBy('nominee_list_id', 'asc')
+							->orderBy('name', 'asc')
+							->get();		
 		return view ('nominees',compact('nominees'));    
     }
 	public function addEditNominee($id = null){		
 		if($id){
 			$nominee = Nominee::find($id);
-			$nomineeLists = NomineeList::all();
+			$nomineeLists = NomineeList::orderBy('name', 'asc')
+										->get();
 			return view('addEditNominee',compact('nominee','nomineeLists'));
 		}else{			
-			$nomineeLists = NomineeList::all();
+			$nomineeLists = NomineeList::orderBy('name', 'asc')
+										->get();
 			return view('addEditNominee',compact('nomineeLists'));
 		}
     }	
@@ -81,7 +83,9 @@ class NomineeController extends Controller
 		
 		$nominee->save();
 		
-        $nominees = Nominee::all();		
+        $nominees = Nominee::orderBy('nominee_list_id', 'asc')
+							->orderBy('name', 'asc')
+							->get();		
 		return redirect()->route('nominees')->with( ['nominees' => $nominees] );
     }
 	public function deleteNominee($id = null){
@@ -92,7 +96,9 @@ class NomineeController extends Controller
 						
 			$nominee->delete();
 		}		
-		$nominees = Nominee::all();		
+		$nominees = Nominee::orderBy('nominee_list_id', 'asc')
+							->orderBy('name', 'asc')
+							->get();	
 		return redirect()->route('nominees')->with( ['nominees' => $nominees] );
 		
     }

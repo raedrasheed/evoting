@@ -7,6 +7,38 @@
     			<div class="col-md-12">
     				<div class="card">
     					<div class="card-header">
+    					<b>{{ __('Welcome') }}</b>			
+    					</div>
+    					<div class="card-body">
+							<div class="row justify-content-center">
+								<p>
+									 {{ __('You are free to vote on GoVote.Live for your best choice.') }} 
+									 {{ __('Our eVoting system based on Blockchain technology so, no one can change you choice.') }}
+									 {{ __('Current voting for football best team, player, goalkeeper, and coach.') }}
+									 {{ __('Feel free to contact us') }} <a href="mailto:s@govote.live">info@govote.live</a>.
+								</p>
+							</div>
+							<div class="row">
+									@php ($now = Carbon\Carbon::now())
+									<!--<div class="links">
+										<a>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</a>
+									</div>-->
+								<p>
+									<Strong><a>{{ __('Voting Time') }}</a></Strong><br/>
+									<a><Strong>{{ __('From') }}:</Strong> {{ config('settings.votingStartTime') }} GTM</a><br/>
+									<a><Strong>{{ __('To') }}:</Strong> {{ config('settings.votingEndTime') }} GTM</a><br/>
+									<a><Strong>{{ __('Now') }}:</Strong> {{ $now }} GTM</a><br/>		
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row justify-content-center">
+    			<div class="col-md-12">
+    				<div class="card">
+    					<div class="card-header">
     					<b>{{ __('Results Statistics') }}</b>			
     					</div>
     					<div class="card-body">
@@ -121,21 +153,13 @@
 				</div>
 				@endforeach	
 			@endif
-			
-		@php ($now = Carbon\Carbon::now())
-		<!--<div class="links">
-			<a>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</a>
-		</div>-->
-		<div class="row justify-content-center">
-			<div class="links" style="text-align:center">
-				<a>{{ __('Voting Time') }}</a><br/>
-				<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-				<a> {{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-				<a>{{ __('Now') }}: {{ $now }} GTM</a><br/>				
-				<a  style="color:#F00;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
+			<div class="row justify-content-center">
+				<div class="links" style="text-align:center">
+					
+					<a  style="color:#F00;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
+					<a>{{ __('Copyright ©2021 GoVote.Live. All rights reserved') }}</a><br/>
+				</div>
 			</div>
-				
-		</div>
     	<script>
     		setTimeout(function start() {
     		  $(".stat-bar").each(function (i) {

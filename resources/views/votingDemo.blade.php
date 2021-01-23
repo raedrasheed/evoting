@@ -27,7 +27,7 @@
 								@foreach ($list as $nominee)
 									<div class="raw raw-shadow top-bottom-padding-10">
 										<label>
-											<input id="{{ $nominee->id }}" name="{{ $nominee->id }}" type="checkbox" class="option-input checkbox {{ $nomineeList->name }}-nominees" onchange="validate(this,{{ $nominee->nominee_list_id }})" />							
+											<input id="{{ $nominee->id }}" name="{{ $nominee->id }}" type="checkbox" class="option-input checkbox {{ $nomineeList->description }}-nominees" onchange="validate(this,{{ $nominee->nominee_list_id }})" />							
 										</label>
 										<img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -41,13 +41,16 @@
 			@endforeach
 		</div>
 	</div>
+	<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+		{{ __('Vote') }}..
+	</button>
 	<script type="text/javascript">
 	function validate(thisObj,listID){
 		var cnt=0;			
 		//alert(thisObj.checked);
 		@foreach ($nomineeLists as $nomineeList)
 			if(listID == {{ $nomineeList->id }}){
-				$(".{{ $nomineeList->name }}-nominees").each(function () {
+				$(".{{ $nomineeList->description }}-nominees").each(function () {
 					if($(this).prop('checked'))
 						cnt++;
 				  });
@@ -60,6 +63,22 @@
 				 }
 			}
 		@endforeach
+	}
+	function JSalert(){
+		swal({   title: "{{ __('This is a Demo!, Nothing will be saved') }}",   
+			text: "{{ __('Your vote will take couple of minutes to be mined') }}",   
+			type: "success",    
+			showCancelButton: false,   
+			confirmButtonColor: "#38c172",   
+			confirmButtonText: "{{ __('Yes') }}",   
+			//cancelButtonText: "{{ __('I am not sure!') }}",   
+			closeOnConfirm: false,   
+			closeOnCancel: false }, 
+			function(isConfirm){   
+				if (isConfirm){
+				 location.replace("{{ route('home') }}");    
+				}
+		});
 	}
 	</script>	
 @else

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MLP61V0H3"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -9,7 +9,7 @@
       gtag('js', new Date());
     
       gtag('config', 'G-7MLP61V0H3');
-    </script>-->
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -55,8 +55,30 @@
 					<ul class="nav navbar-nav">
 					</ul>
 					
+					<ul class="navbar-nav">
+							<!-- Authentication Links -->
+							 @php $locale = session()->get('locale'); @endphp
+
+								<li class="nav-item dropdown">
+									<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+										 @switch($locale)
+											@case('ar')
+											<img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي
+											@break											
+											@default
+											<img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English
+										@endswitch
+										<span class="caret"></span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" href="{{ url('lang/en') }}"><img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English</a>
+										<a class="dropdown-item" href="{{ url('lang/ar') }}"><img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي</a>
+										</div>
+								</li>
+					</ul>
+					
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav {{(App::isLocale('ar') ? 'ml-auto-right' : 'ml-auto')}}">
                         <!-- Authentication Links -->
 						  @guest
 								<li class="nav-item">
@@ -77,7 +99,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="{{ route('home') }}">
-                                       {{ __('Home') }}
+                                       {{ __('Voting Page') }}
+                                    </a>
+									<a class="dropdown-item" href="{{ route('myProfile') }}">
+                                       {{ __('My Profile') }}
                                     </a>
 									@if (Auth::user()->role == 1)
 									<a class="dropdown-item" href="{{ route('nomineeLists') }}">
@@ -93,7 +118,7 @@
                                        {{ __('All Users') }}
                                     </a>
 									 <a class="dropdown-item" href="{{ route('buildBlockchain') }}">
-                                       {{ __('Mining Unmined Blocks') }}
+                                       {{ __('Mining Unmined Blocks') }} ({{ App\PoolOfVote::all()->count() }})
                                     </a>
 									<a class="dropdown-item" href="{{ route('sendSMSForAll') }}">
                                        {{ __('Send SMS to non-voting users') }}
@@ -131,27 +156,7 @@
                         @endguest
                     </ul>
                 
-					<ul class="navbar-nav">
-							<!-- Authentication Links -->
-							 @php $locale = session()->get('locale'); @endphp
-
-								<li class="nav-item dropdown">
-									<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-										 @switch($locale)
-											@case('ar')
-											<img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي
-											@break											
-											@default
-											<img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English
-										@endswitch
-										<span class="caret"></span>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-										<a class="dropdown-item" href="{{ url('lang/en') }}"><img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English</a>
-										<a class="dropdown-item" href="{{ url('lang/ar') }}"><img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي</a>
-										</div>
-								</li>
-						</ul>
+					
 				</div>
             </div>
         </nav>

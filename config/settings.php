@@ -13,8 +13,8 @@ return [
 	'remindMessage' => 'نذكركم بالمشاركة بانتخابات نقابة العاملين على الرابط https://election.iugaza.edu.ps ... اللجنة الانتخابية',
 	//'remindMessage' => 'عزيزي المقترع يحق لك انتخاب رئيس واحد وأربع أكاديميين وأربع  إداريين كحد أقصى...   اللجنة الانتخابية',
 	'maintenance' => '0',
-	'listsInRawWidth' => '6',
-	'listsInRawWidthInVoteCards' => '6',
+	'listsInRawWidth' => '3',
+	'listsInRawWidthInVoteCards' => '3',
 	'viewListImageInVoteCards' => 0,
 	'resultForEachList' => 1,
 

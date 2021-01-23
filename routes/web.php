@@ -22,6 +22,7 @@ use App\NomineeList;
 Route::get('/', function () {
 		
 		$nomineeLists = NomineeList::where('is_active',true)
+									->orderBy('name', 'asc')
 									->get();
 			
 		$users = User::where('role',2);
@@ -113,6 +114,10 @@ Auth::routes([
 Route::get('profile', function () {
     return view('profile');
 })->middleware('verified');
+
+Route::get('/myProfile', 'UserController@myProfile')->name('myProfile')->middleware('verified');
+Route::post('/saveProfile', 'UserController@saveProfile')->name('saveProfile')->middleware('verified');
+
 
 Route::get('/results', 'HomeController@results')->name('results')->middleware('verified');
 Route::get('/voteCards', 'HomeController@voteCards')->name('voteCards')->middleware('verified');

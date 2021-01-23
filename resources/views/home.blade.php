@@ -260,7 +260,7 @@
 								@foreach ($list as $nominee)
 									<div class="raw raw-shadow top-bottom-padding-10">
 										<label>
-											<input id="{{ $nominee->id }}" name="{{ $nominee->id }}" type="checkbox" class="option-input checkbox {{ $nomineeList->name }}-nominees" onchange="validate(this,{{ $nominee->nominee_list_id }})" />							
+											<input id="{{ $nominee->id }}" name="{{ $nominee->id }}" type="checkbox" class="option-input checkbox {{ $nomineeList->description }}-nominees" onchange="validate(this,{{ $nominee->nominee_list_id }})" />							
 										</label>
 										<img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -273,21 +273,20 @@
 				@endif
 			@endforeach
 		</div>
-		<div class="row justify-content-center">
-            <div class="col-md-12 top-padding-15">
-                <button onclick="JSalert()" class="btn btn-success btn-block" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
-				{{ __('Vote') }}..
-				</button>
-            </div>
-		</div>
+		<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+		{{ __('Vote') }}..
+		</button>
+		
 	</div>
 	<script type="text/javascript">
 	function validate(thisObj,listID){
 		var cnt=0;			
 		//alert(thisObj.checked);
+		
 		@foreach ($nomineeLists as $nomineeList)
+			//alert({{ $nomineeList->selected_count }});
 			if(listID == {{ $nomineeList->id }}){
-				$(".{{ $nomineeList->name }}-nominees").each(function () {
+				$(".{{ $nomineeList->description }}-nominees").each(function () {
 					if($(this).prop('checked'))
 						cnt++;
 				  });
@@ -310,12 +309,12 @@
 					
 					var spanID = "#span"+$(this).prop("id");
 					pres = $(spanID).attr("data-list");
-					verificationText = verificationText +"<tr><td>" + $(spanID).text() + "</td><td>" + pres + "</td></tr>";				
+					verificationText = verificationText +"<tr><td>" + pres + "</td><td>" + $(spanID).text() + "</td></tr>";				
 				}
 				cnt++;
 				
 			});
-		verificationText = verificationText +"</tr></table></div>"
+		verificationText = verificationText +"</tr></table></div>";
 				
 		swal({
 		html:true,
@@ -369,8 +368,8 @@
 								title = "{{ __('Vote saved successfully!') }}";
 							}
 						 swal({   title: title,   
-							text: "{{ __('Your account will locked permanently!') }}",   
-							type: "success",   
+							text: "{{ __('Your account will locked permanently!') }}\n{{ __('Your vote will take couple of minutes to be mined') }}",   
+							type: "success",    
 							showCancelButton: false,   
 							confirmButtonColor: "#38c172",   
 							confirmButtonText: "{{ __('Yes') }}",   
@@ -531,20 +530,20 @@
 		<div class="card-header"><b>{{ trans('app.title') }}</b></div>
         <div class="card-body justify-content-center">
 			<div class="row justify-content-center">
-                    <img src="imgs/iug_logo.png" width="40%">
+                    <img src="imgs/govotelive_logo_T.png" width="40%">
             </div>
             <div class="row justify-content-center">
                 <P>
                     <br/><br/>
                     <a>
-                      ???????? ???????????????? ????????????????????
+					{{ __('Maintenance') }}
                     </a>
                 </P>
             </div>
             <div class="row justify-content-center">
                 <P>
                     <a>
-                       ???????????? ?????? ?????????????? ?????????? ?????? ??????????
+                        {{ __('Maintenance') }}
                     </a>
                 </P>
             </div>

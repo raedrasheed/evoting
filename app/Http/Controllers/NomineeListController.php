@@ -16,7 +16,7 @@ class NomineeListController extends Controller
 		$this->addLog("View all nominees lists");
 		
 		$nomineeLists = NomineeList::orderBy('name')->					
-							get();		
+										get();		
 		return view ('nomineeLists',compact('nomineeLists'));    
     }
 	public function addEditNomineeList($id = null){		
@@ -67,7 +67,8 @@ class NomineeListController extends Controller
 		
 		$nomineeList->save();
 		
-        $nomineeLists = NomineeList::all();		
+        $nomineeLists = NomineeList::orderBy('name')->					
+										get();		
 		return redirect()->route('nomineeLists')->with( ['nomineeLists' => $nomineeLists] );
     }
 	public function deleteNomineeList($id = null){
@@ -78,7 +79,8 @@ class NomineeListController extends Controller
 						
 			$nomineeList->delete();
 		}		
-		$nomineeLists = NomineeList::all();		
+		$nomineeLists = NomineeList::orderBy('name')->					
+									get();	
 		return redirect()->route('nomineeLists')->with( ['nomineeLists' => $nomineeLists] );
 		
     }

@@ -38,7 +38,9 @@ class HomeController extends Controller
      */
     public function index(){
 		$lists = array();
-		$nomineeLists = NomineeList::where('is_active',true)->get();
+		$nomineeLists = NomineeList::where('is_active',true)
+										->orderBy('name', 'asc')
+										->get();
 		foreach($nomineeLists as $nomineeList){	
 			$nominees = Nominee::where('nominee_list_id',$nomineeList->id)
 								 ->where('is_active',true)
@@ -80,7 +82,9 @@ class HomeController extends Controller
         $this->addLog("View voting demo");
 		
 		$lists = array();
-		$nomineeLists = NomineeList::where('is_active',true)->get();
+		$nomineeLists = NomineeList::where('is_active',true)
+										->orderBy('name', 'asc')
+										->get();
 		foreach($nomineeLists as $nomineeList){	
 			$nominees = Nominee::where('nominee_list_id',$nomineeList->id)
 								 ->where('is_active',true)
@@ -95,7 +99,9 @@ class HomeController extends Controller
 	public function voteCards(){
 		$this->addLog("View vote cards");
 		$lists = array();
-		$nomineeLists = NomineeList::where('is_active',true)->get();
+		$nomineeLists = NomineeList::where('is_active',true)
+									->orderBy('name', 'asc')
+									->get();
 		foreach($nomineeLists as $nomineeList){	
 			$nominees = Nominee::where('nominee_list_id',$nomineeList->id)
 								 ->where('is_active',true)
