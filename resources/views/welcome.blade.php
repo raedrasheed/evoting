@@ -121,9 +121,10 @@
 					</div>
 				</div>
 			@else
-				@foreach ($nomineeLists as $nomineeList) 
+				 
 				<div class="row justify-content-center">
-					<div class="col-md-12">
+				@foreach ($nomineeLists as $nomineeList)
+					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header"><b>{{ __($nomineeList->name) }}</b></div>
 							<div class="card-body">
@@ -150,8 +151,9 @@
 							</div>
 						</div>	
 					</div>
-				</div>
 				@endforeach	
+				</div>
+				
 			@endif
 			<div class="row justify-content-center">
 				<div class="links" style="text-align:center">

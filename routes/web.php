@@ -108,53 +108,53 @@ Route::get('/history', function () {
 Auth::routes([
 	'register' => true, // Registration Routes...
 	'reset' => true, 	// Password Reset Routes...
-	'verify' => true,	// Email Verification Routes...
+	'verify' => false,	// Email Verification Routes...
 ]);
 
 Route::get('profile', function () {
-    return view('profile');
-})->middleware('verified');
+    return view('profile'); //return view('profile')->middleware('verified');
+});
 
-Route::get('/myProfile', 'UserController@myProfile')->name('myProfile')->middleware('verified');
-Route::post('/saveProfile', 'UserController@saveProfile')->name('saveProfile')->middleware('verified');
+Route::get('/myProfile', 'UserController@myProfile')->name('myProfile');
+Route::post('/saveProfile', 'UserController@saveProfile')->name('saveProfile');
 
 
-Route::get('/results', 'HomeController@results')->name('results')->middleware('verified');
-Route::get('/voteCards', 'HomeController@voteCards')->name('voteCards')->middleware('verified');
+Route::get('/results', 'HomeController@results')->name('results');
+Route::get('/voteCards', 'HomeController@voteCards')->name('voteCards');
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
-Route::get('/votingDemo', 'HomeController@votingDemo')->name('votingDemo')->middleware('verified');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/votingDemo', 'HomeController@votingDemo')->name('votingDemo');
 
-Route::get('/logs/{id}', 'LogController@logs')->name('logs')->middleware('verified');
-Route::get('/deleteLog/{id}', 'LogController@deleteLog')->name('deleteLog')->middleware('verified');
-Route::get('/clearLogs', 'LogController@clearLogs')->name('clearLogs')->middleware('verified');
+Route::get('/logs/{id}', 'LogController@logs')->name('logs');
+Route::get('/deleteLog/{id}', 'LogController@deleteLog')->name('deleteLog');
+Route::get('/clearLogs', 'LogController@clearLogs')->name('clearLogs');
 
-//Route::get('/settings', 'HomeController@settings')->name('settings')->middleware('verified');
-//Route::get('/editSettings', 'HomeController@editSettings')->name('editSettings')->middleware('verified');
+//Route::get('/settings', 'HomeController@settings')->name('settings');
+//Route::get('/editSettings', 'HomeController@editSettings')->name('editSettings');
 
-Route::get('/nominees', 'NomineeController@index')->name('nominees')->middleware('verified');
-Route::get('/addEditNominee/{id}', 'NomineeController@addEditNominee')->name('addEditNominee')->middleware('verified');
-Route::get('/deleteNominee/{id}', 'NomineeController@deleteNominee')->name('deleteNominee')->middleware('verified');
-Route::post('/saveNominee', 'NomineeController@saveNominee')->name('saveNominee')->middleware('verified');
+Route::get('/nominees', 'NomineeController@index')->name('nominees');
+Route::get('/addEditNominee/{id}', 'NomineeController@addEditNominee')->name('addEditNominee');
+Route::get('/deleteNominee/{id}', 'NomineeController@deleteNominee')->name('deleteNominee');
+Route::post('/saveNominee', 'NomineeController@saveNominee')->name('saveNominee');
 
-Route::get('/nomineeLists', 'NomineeListController@nomineeLists')->name('nomineeLists')->middleware('verified');
-Route::get('/addEditNomineeList/{id}', 'NomineeListController@addEditNomineeList')->name('addEditNomineeList')->middleware('verified');
-Route::get('/deleteNomineeList/{id}', 'NomineeListController@deleteNomineeList')->name('deleteNomineeList')->middleware('verified');
-Route::post('/saveNomineeList', 'NomineeListController@saveNomineeList')->name('saveNomineeList')->middleware('verified');
+Route::get('/nomineeLists', 'NomineeListController@nomineeLists')->name('nomineeLists');
+Route::get('/addEditNomineeList/{id}', 'NomineeListController@addEditNomineeList')->name('addEditNomineeList');
+Route::get('/deleteNomineeList/{id}', 'NomineeListController@deleteNomineeList')->name('deleteNomineeList');
+Route::post('/saveNomineeList', 'NomineeListController@saveNomineeList')->name('saveNomineeList');
 
-Route::get('/users', 'UserController@users')->name('users')->middleware('verified');
-Route::get('/usersAll', 'UserController@usersAll')->name('usersAll')->middleware('verified');
-Route::get('/addEditUser/{id}', 'UserController@addEditUser')->name('addEditUser')->middleware('verified');
-Route::get('/deleteUser/{id}', 'UserController@deleteUser')->name('deleteUser')->middleware('verified');
-Route::post('/saveUser', 'UserController@saveUser')->name('saveUser')->middleware('verified');
+Route::get('/users', 'UserController@users')->name('users');
+Route::get('/usersAll', 'UserController@usersAll')->name('usersAll');
+Route::get('/addEditUser/{id}', 'UserController@addEditUser')->name('addEditUser');
+Route::get('/deleteUser/{id}', 'UserController@deleteUser')->name('deleteUser');
+Route::post('/saveUser', 'UserController@saveUser')->name('saveUser');
 
-Route::post('/addVote', 'BlockController@addVote')->name('addVote')->middleware('verified');
+Route::post('/addVote', 'BlockController@addVote')->name('addVote');
 
-Route::get('/buildBlockchain', 'BlockController@buildBlockchain')->name('buildBlockchain')->middleware('verified');
-Route::get('/blockchainExplorer', 'BlockController@blockchainExplorer')->name('blockchainExplorer')->middleware('verified');
-Route::get('/refineBlockchain', 'BlockController@refineBlockchain')->name('refineBlockchain')->middleware('verified');
+Route::get('/buildBlockchain', 'BlockController@buildBlockchain')->name('buildBlockchain');
+Route::get('/blockchainExplorer', 'BlockController@blockchainExplorer')->name('blockchainExplorer');
+Route::get('/refineBlockchain', 'BlockController@refineBlockchain')->name('refineBlockchain');
 
-Route::get('/lang/{locale}', 'LocalizationController@index')->middleware('verified');
+Route::get('/lang/{locale}', 'LocalizationController@index');
 
-Route::get('/sendSMSForAll', 'HomeController@sendSMSForAll')->name('sendSMSForAll')->middleware('verified');
-Route::get('/sendSMSToken/{username}', 'HomeController@sendSMSToken')->name('sendSMSToken')->middleware('verified');
+Route::get('/sendSMSForAll', 'HomeController@sendSMSForAll')->name('sendSMSForAll');
+Route::get('/sendSMSToken/{username}', 'HomeController@sendSMSToken')->name('sendSMSToken');
