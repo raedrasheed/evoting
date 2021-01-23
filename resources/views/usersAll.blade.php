@@ -7,7 +7,7 @@
 		<div class="row justify-content-center">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-header"><b>{{ __('Users') }}</b>
+					<div class="card-header"><b>{{ __('Users') }} ({{ count($users) }})</b>
 						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
 							<a href="{{ route('addEditUser', [ 'id'=> 0 ]) }}" ><img class="m-icon" src="imgs/add.png" title="Add New User"/></a>
 						</div>
