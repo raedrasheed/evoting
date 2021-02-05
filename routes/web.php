@@ -19,6 +19,12 @@ use Carbon\Carbon;
 use App\Block;
 use App\NomineeList;
 
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+	Artisan::call('view:clear');
+    return "Cache is cleared";
+});
+
 Route::get('/', function () {
 		
 		$nomineeLists = NomineeList::where('is_active',true)

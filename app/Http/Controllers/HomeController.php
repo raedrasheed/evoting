@@ -120,6 +120,7 @@ class HomeController extends Controller
 		$this->addLog("View results");
 		
 		$nomineeLists = NomineeList::where('is_active',true)
+									->orderBy('name', 'asc')
 									->get();
 			
 		$users = User::where('role',2);
