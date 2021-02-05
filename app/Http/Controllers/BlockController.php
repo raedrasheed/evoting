@@ -25,14 +25,15 @@ use App\Node010;
 
 /**
  * Class BlockController
- * @author  Raed Rasheed
+ * @author Raed Rasheed
  * The Block Controller manage blockchain
 **/
 
 class BlockController extends Controller
 {
      /**
-     * addVote Method
+     * addVote Method: 	Add the vote into voting pool 
+	 *					and set user to voted user
      * @param $request
      * @return String
     **/
@@ -114,7 +115,9 @@ class BlockController extends Controller
 		}
 	}
 	/**
-     * buildBlockchain Method
+     * buildBlockchain Method: 	Get votes from voting pool then 
+	 *							start to mine them for insting 
+	 *							the votes into blockchain
      * @param None
      * @return String
     **/
@@ -134,7 +137,8 @@ class BlockController extends Controller
 		}
 	}
 	/**
-     * addBlock Method
+     * addBlock Method:	Add new block to the blockchain
+	 *
      * @param __vote (JSON format of the vote detials)
      * @return integer
     **/
@@ -287,7 +291,8 @@ class BlockController extends Controller
 		}			
     }
 	/**
-     * blockMining Method
+     * blockMining Method: Search for the new block Hash
+	 *
      * @param version, previous_block_hash, vote_hash, timestamp, difficulty_target
      * @return integer (the nonce)
     **/
@@ -321,7 +326,8 @@ class BlockController extends Controller
 		return $nonce;
 	}
 	/**
-     * blockchainExplorer Page
+     * blockchainExplorer Page: Show the blockchain as it is in the DB
+	 *
      * @param None
      * @return the blocks of the blockchain to the view blockchainExplorer
     **/
@@ -341,7 +347,8 @@ class BlockController extends Controller
         return view('blockchainExplorer',compact('fine','blocks'));
     }
 	/**
-     * refineBlockchain Page
+     * refineBlockchain Page:	Retrive the (50% + 1) blockchain
+	 *							from the distributed DB
      * @param None
      * @return the blocks of the blockchain to the view blockchainExplorer
     **/
@@ -865,7 +872,8 @@ class BlockController extends Controller
 		
 	}
 	/**
-     * blockchainValid Method
+     * blockchainValid Method: Check the vote and blok validity
+	 *
      * @param None
      * @return integer
     **/
@@ -897,7 +905,8 @@ class BlockController extends Controller
 		return !$error;
 	}
 	/**
-     * addLog Method
+     * addLog Method: Save event to log table
+	 *
      * @param action
      * @return void
     **/
