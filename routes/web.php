@@ -117,6 +117,10 @@ Auth::routes([
 	'verify' => false,	// Email Verification Routes...
 ]);
 
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');
+
+
 Route::get('profile', function () {
     return view('profile'); //return view('profile')->middleware('verified');
 });

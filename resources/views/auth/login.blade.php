@@ -37,19 +37,27 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div>						
                         <div class="form-group row mb-0">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary btn-block">
                                     {{ __('Login') }}
-                                </button>
-                                @if (Route::has('password.request'))
+                                </button>                                
+                            </div>
+                        </div>
+						<br/>
+						<div class="form-group row mb-0">
+                            <div class="col-md-12">
+								<div class="form-group">									
+									<a href="{{url('/redirect')}}" class="btn btn-primary btn-block">Login with Facebook</a>
+								</div>
+							</div>
+                        </div>
+								@if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>

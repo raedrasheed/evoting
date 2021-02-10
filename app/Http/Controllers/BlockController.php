@@ -116,7 +116,7 @@ class BlockController extends Controller
 	}
 	/**
      * buildBlockchain Method: 	Get votes from voting pool then 
-	 *							start to mine them for insting 
+	 *							start to mine them to insting 
 	 *							the votes into blockchain
      * @param None
      * @return String
