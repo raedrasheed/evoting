@@ -49,7 +49,7 @@
 						<div class="form-group row mb-0">
                             <div class="col-md-12">
 								<div class="form-group">									
-									<a href="{{url('/redirect')}}" class="btn btn-primary btn-block">Login with Facebook</a>
+									<a href="{{url('/redirect')}}" class="btn btn-primary btn-block"><img src="{{ asset('imgs/facebook.png') }}" width="16px"> {{ __('Login with Facebook') }}</a>
 								</div>
 							</div>
                         </div>
