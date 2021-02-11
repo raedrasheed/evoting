@@ -64,9 +64,10 @@
     				</div>	
     			</div>
     		</div>
+			<div class="row justify-content-center">
 			@if(!config('settings.resultForEachList'))
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+				
+					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header"><b>{{ __('Vote Results') }}</b></div>
 							<div class="card-body">
@@ -91,11 +92,10 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+			
 			@else
 				@foreach ($nomineeLists as $nomineeList) 
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="card">
 							<div class="card-header"><b>{{ __($nomineeList->name) }}</b></div>
 							<div class="card-body">
@@ -122,9 +122,10 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+				
 				@endforeach	
 			@endif
+			</div>
        	</div>	
     	<script>
     		setTimeout(function start() {
