@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img style="width:50px;" src="{{ asset('imgs/govotelive_logo_T.png') }}"/>
+                    <img style="width:50px;" src="{{ asset('imgs/logo.png') }}"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -80,7 +80,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav {{(App::isLocale('ar') ? 'ml-auto-right' : 'ml-auto')}}">
                         <!-- Authentication Links -->
-						  @guest
+						@guest
 								<li class="nav-item">
 									<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
 								</li>
@@ -130,19 +130,13 @@
                                         {{ __('Blockchain Explorer') }}
                                     </a>
 									@endif
-									@if (Auth::user()->role == 1 || (config('settings.viewVotingCards') &&
-										Carbon\Carbon::parse(config('settings.votingStartTime'))->lt(Carbon\Carbon::now())))
 									<a class="dropdown-item" href="{{ route('voteCards') }}">
                                         {{ __('Vote Cards') }}
                                     </a>
-									@endif
-									@if (Auth::user()->role == 1 || (config('settings.viewResults') &&
-										Carbon\Carbon::parse(config('settings.votingStartTime'))->lt(Carbon\Carbon::now())))
 									<a class="dropdown-item" href="{{ route('results') }}">
                                         {{ __('Results') }}
                                     </a>
-									@endif									
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+									 <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

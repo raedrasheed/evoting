@@ -6,7 +6,7 @@
 @php ( $choiceElement = 'imgs/unchecked.png' )
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
 
-@if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now))
+@if (1==1)
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	<div class="container">		
     		<div class="row justify-content-center">

@@ -3,7 +3,7 @@
 @section('content')
 @php ($now = Carbon\Carbon::now())
 
-@if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now) )
+@if (1==1)
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	@php ($defualtPhoto = 'imgs/photos/photo.jpg')
     	<div class="container">		
