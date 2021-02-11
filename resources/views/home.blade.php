@@ -16,9 +16,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:---<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
@@ -75,9 +75,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
@@ -134,9 +134,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
@@ -192,9 +192,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">

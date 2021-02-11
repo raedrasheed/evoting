@@ -86,7 +86,9 @@
 							<div class="col-md-12">
 								<p>
 									{{ __('Current voting for football best team, player, goalkeeper, and coach.') }}
-									{{ __('Feel free to contact us') }} <a href="mailto:s@govote.live">info@govote.live
+								</p>
+								<p>
+								{{ __('Feel free to contact us') }} <a href="mailto:info@govote.live">info@govote.live</a>
 								</p>
 							</div>
 						</div>	
