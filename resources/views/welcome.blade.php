@@ -85,7 +85,11 @@
 						<div class="form-group row mb-0">
 							<div class="col-md-12">
 								<p>
+
 									{{ __('We are conducting an opinion poll about the popularity of the electoral lists that will participate in the Palestinian elections.') }}
+
+									{{-- __('Current voting for football best team, player, goalkeeper, and coach.') --}}
+
 								</p>
 								<p>
 								{{ __('Feel free to contact us') }} <a href="mailto:info@govote.live">info@govote.live</a>
