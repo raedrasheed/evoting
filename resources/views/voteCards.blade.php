@@ -14,7 +14,7 @@
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Voting Cards') }}: {{ $noOfVotes }} {{ __('Cards') }}</b>
-    						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+    						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
     							{{ __('Blockchain Status') }}: 
     							
     								@if ( $fine )<span style="color:#38c172;font-weight:600;text-decoration:none;"> {{ __('Fine') }}</span>
@@ -68,7 +68,7 @@
 														@if($nomineeList->id == $key)
 															<b>{{ __($nomineeList->name) }}	</b>
 															@if(config('settings.viewListImageInVoteCards'))
-															<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+															<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 																<img class="nominee-photo" src="{{ asset($nomineeList->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
 															</div>
 															@endif

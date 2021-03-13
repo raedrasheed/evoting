@@ -64,16 +64,7 @@ class LoginController extends Controller
           if($user->password){
              if (Hash::check($password, $user->password)) {
                     Auth::login($user);
-                    	$log = new Log();
-                		$log->user_id = $user->id;
-                		$log->action = "Login";
-                		$log->time = Carbon::now();
-                		$log->ip = $_SERVER['REMOTE_ADDR'];
-                		$MAC = exec('getmac');
-                		$MAC = strtok($MAC, ' '); 
-                		$log->mac = $MAC;
-                		
-                		$log->save();
+                    $this->addLog("Login");
                     return redirect('/home');
             }
           }
@@ -130,16 +121,7 @@ class LoginController extends Controller
 	function authenticated(Request $request, $user)
 	{
 		//dd($user);
-		$log = new Log();
-		$log->user_id = $user->id;
-		$log->action = "Login";
-		$log->time = Carbon::now();
-		$log->ip = $_SERVER['REMOTE_ADDR'];
-		$MAC = exec('getmac');
-		$MAC = strtok($MAC, ' '); 
-		$log->mac = $MAC;
-		
-		$log->save();
+		$this->addLog("Login");
 		
 		$vodted = Voted::where('user_id',$user->id)->first();
 		$canVote = 0;
@@ -157,14 +139,7 @@ class LoginController extends Controller
 	
 	public function logout(Request $request)
     {
-		$log = new Log();
-		$log->user_id = $request->user()->id;
-		$log->action = "Logout";
-		$log->time = Carbon::now();
-		$log->ip = $_SERVER['REMOTE_ADDR'];
-		$MAC = exec('getmac');
-		$MAC = strtok($MAC, ' '); 
-		$log->mac = $MAC;
+		$this->addLog("Logout");
 
         $this->guard()->logout();
 
@@ -172,8 +147,18 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 		
-		$log->save();
-
         return redirect('/');
     }
+	public function addLog($action){
+		$log = new Log();
+		$log->user_id = Auth::user()->id;
+		$log->action = $action;
+		$log->time = Carbon::now();
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$MAC = exec('getmac');
+		$MAC = strtok($MAC, ' '); 
+		$log->mac = $MAC;
+		$log->save();
+		
+	}
 }

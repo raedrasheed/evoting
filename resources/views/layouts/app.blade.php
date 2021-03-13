@@ -2,14 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MLP61V0H3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-7MLP61V0H3');
-    </script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-186102971-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-186102971-1');
+	</script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -30,7 +31,7 @@
     <!-- Styles -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css?version=2') }}" rel="stylesheet">
 	
 	<script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
@@ -39,7 +40,7 @@
 	
 	
 </head>
-<body dir="{{(App::isLocale('ar') ? 'rtl' : 'ltr')}}" style="text-align:{{(App::isLocale('ar') ? 'right' : 'left')}}">
+<body dir="{{(App::isLocale('ar') || App::isLocale('he') ? 'rtl' : 'ltr')}}" style="text-align:{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}};background:url({{ asset('imgs/background3.jpg')}}) no-repeat center center fixed;background-size: cover;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -64,7 +65,10 @@
 										 @switch($locale)
 											@case('ar')
 											<img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي
-											@break											
+											@break	
+											{--@case('he')--}
+											<!--<img src="{{asset('imgs/he.png')}}" width="20px" height="20x"> עִברִית-->
+												{--@break	--}
 											@default
 											<img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English
 										@endswitch
@@ -73,12 +77,13 @@
 									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 										<a class="dropdown-item" href="{{ url('lang/en') }}"><img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English</a>
 										<a class="dropdown-item" href="{{ url('lang/ar') }}"><img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي</a>
+										<!--<a class="dropdown-item" href="{{ url('lang/he') }}"><img src="{{asset('imgs/he.png')}}" width="20px" height="20x"> עִברִית</a>-->
 										</div>
 								</li>
 					</ul>
 					
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav {{(App::isLocale('ar') ? 'ml-auto-right' : 'ml-auto')}}">
+                    <ul class="nav navbar-nav {{(App::isLocale('ar') || App::isLocale('he') ? 'ml-auto-right' : 'ml-auto')}}">
                         <!-- Authentication Links -->
 						@guest
 								<li class="nav-item">

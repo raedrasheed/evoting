@@ -8,7 +8,7 @@
 				<div class="card">
 					<div class="card-header">
 						<b>{{ __('Blockchain Explorer') }}</b>
-						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 							{{ __('Blockchain Status') }}: 
 							
 								@if ( $fine )<span style="color:#38c172;font-weight:600;text-decoration:none;"> {{ __('Fine') }}</span>

@@ -17,13 +17,13 @@ class LogController extends Controller
                         ->join('users', 'users.id', '=', 'logs.user_id')
                         ->where('logs.user_id',$id)
                         ->orderBy('logs.created_at', 'desc')
-                        ->get();
+                        ->paginate(15);
 		}else{
 			//$logs = Log::orderBy('created_at', 'desc')->get();	
 				$logs = Log::select('*')
                         ->join('users', 'users.id', '=', 'logs.user_id')
                         ->orderBy('logs.created_at', 'desc')
-                        ->get();
+                        ->paginate(15);
 		}        
 		return view ('logs',compact('logs'));     
     }

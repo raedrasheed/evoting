@@ -76,7 +76,7 @@
 						</div>
 					</div>
 				</div>	
-				<div class="col-md-6 mx-auto">
+				<div class="col-md-8 mx-auto">
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Results Statistics') }}</b>			
@@ -148,7 +148,7 @@
 						<br />
 						<br />
 						<br />
-						<a  style="color:#F00;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
+						<a  style="color:#fff;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
 						<a>{{ __('Copyright ©2021 GoVote.Live. All rights reserved') }}</a><br/>
 					</div>
 				</div>

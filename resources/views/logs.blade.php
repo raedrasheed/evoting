@@ -8,7 +8,7 @@
 				<div class="card">
 					<div class="card-header">
 					<b>{{ __('Logs') }}</b>
-						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 							<a href="{{ route('clearLogs') }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="Clear All Logs" /></a>
 						</div>
 					</div>
@@ -39,6 +39,9 @@
 								@endforeach	
 							</tbody>
 						</table>
+						<p>
+						    {{ $logs->links() }}
+						</p>
 					</div>
 				</div>
 			</div>
