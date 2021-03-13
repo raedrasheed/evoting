@@ -8,7 +8,7 @@
 				<div class="card">
 					<div class="card-header">
 					<b>{{ __('Logs') }}</b>
-						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 							<a href="{{ route('clearLogs') }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="Clear All Logs" /></a>
 						</div>
 					</div>
@@ -17,6 +17,7 @@
 						<table id="myTable">	
 							<thead>
 								<tr class="header">
+									<th>{{ __('LogID') }}</th>
 									<th>{{ __('ID') }}</th>
 									<th>{{ __('User') }}</th>
 									<th>{{ __('Action') }}</th>
@@ -29,16 +30,20 @@
 							<tbody>
 								@foreach ($logs as $log)
 									<tr>
+										<td>{{ $log->logID }}</td>
 										<td>{{ $log->id }}</td>
 										<td>{{ $log->user->name }}</td> 
 										<td>{{ $log->action }}</td>
-										<td>{{ Carbon\Carbon::parse($log->time)->addHour(2) }}</td>
+										<td>{{ Carbon\Carbon::parse($log->time) }}</td>
 										<td>{{ $log->ip }}</td>																			
-										<td><a href="{{ route('deleteLog', [ 'id'=> $log->id ]) }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="{{ __('Delete Log') }}" /></a></td>								
+										<td><a href="{{ route('deleteLog', [ 'id'=> $log->logID ]) }}"><img class="m-icon" src="{{ asset('imgs/delete.png') }}" title="{{ __('Delete Log') }}" /></a></td>								
 									</tr>
 								@endforeach	
 							</tbody>
 						</table>
+						<p>
+						    {{ $logs->links() }}
+						</p>
 					</div>
 				</div>
 			</div>

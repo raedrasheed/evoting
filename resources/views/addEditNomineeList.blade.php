@@ -14,7 +14,7 @@
 							<input type="hidden" id="id" name="id" value="@if(isset($nomineeList)){{ $nomineeList->id }}@else{{ __('0') }}@endif"/>
 							
 							<div class="form-group row">
-								<label for="name" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Name') }}</label>
+								<label for="name" class="col-md-4 col-form-label{{(App::isLocale('ar') || App::isLocale('he') ? ' text-md-left' : ' text-md-right')}}">{{ __('Name') }}</label>
 
 								<div class="col-md-8">
 									<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="@if(isset($nomineeList)){{ $nomineeList->name }}@else{{ old('name') }}@endif" required autocomplete="name" autofocus>
@@ -27,7 +27,7 @@
 								</div>
 							</div>
 							 <div class="form-group row">
-								<label for="photo" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Photo') }}</label>
+								<label for="photo" class="col-md-4 col-form-label{{(App::isLocale('ar') || App::isLocale('he') ? ' text-md-left' : ' text-md-right')}}">{{ __('Photo') }}</label>
 
 								<div class="col-md-8">
 									<label for="photo"> 
@@ -42,7 +42,7 @@
 								</div>
 							</div>	
 							<div class="form-group row">
-								<label for="selected_count" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Count') }}</label>
+								<label for="selected_count" class="col-md-4 col-form-label{{(App::isLocale('ar') || App::isLocale('he') ? ' text-md-left' : ' text-md-right')}}">{{ __('Count') }}</label>
 								<div class="col-md-8">
 									<input id="selected_count" type="number" class="form-control @error('selected_count') is-invalid @enderror" name="selected_count" min="1" value="@if(isset($nomineeList)){{ $nomineeList->selected_count }}@else{{ old('selected_count') }}@endif" required autocomplete="selected_count" autofocus>
 
@@ -54,7 +54,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="is_active" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Active') }}</label>
+								<label for="is_active" class="col-md-4 col-form-label{{(App::isLocale('ar') || App::isLocale('he') ? ' text-md-left' : ' text-md-right')}}">{{ __('Active') }}</label>
 
 								<div class="col-md-8">
 									<input id="is_active" type="checkbox" class="form-control @error('is_active') is-invalid @enderror" name="is_active" @if(isset($nomineeList))@if($nomineeList->is_active) {{ _('checked') }} @endif @endif autocomplete="is_active" autofocus>
@@ -67,7 +67,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="description" class="col-md-4 col-form-label{{(App::isLocale('ar') ? ' text-md-left' : ' text-md-right')}}">{{ __('Description') }}</label>
+								<label for="description" class="col-md-4 col-form-label{{(App::isLocale('ar') || App::isLocale('he') ? ' text-md-left' : ' text-md-right')}}">{{ __('Description') }}</label>
 								<div class="col-md-8">
 									<input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="@if(isset($nomineeList)){{ $nomineeList->description }}@else{{ old('description') }}@endif" required autocomplete="description" autofocus>
 

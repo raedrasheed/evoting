@@ -16,14 +16,16 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:---<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
 							<p>
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+    						    <br><br><a class="btn btn-primary btn-block" href=" {{ route('results') }}"> {{ __('Results') }} </a>
+    						    <br><a class="btn btn-primary btn-block" href=" {{ route('voteCards') }}"> {{ __('Vote Cards') }} </a>
 							</p>
 						</div>
 						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -75,14 +77,16 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
 							<p>
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+    						    <br><br><a class="btn btn-primary btn-block" href=" {{ route('results') }}"> {{ __('Results') }} </a>
+    						    <br><a class="btn btn-primary btn-block" href=" {{ route('voteCards') }}"> {{ __('Vote Cards') }} </a>
 							</p>
 						</div>
 						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -134,9 +138,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
@@ -192,14 +196,16 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						<div class="links">
 							<p>
     						    {{ __('Voting Demo [this demo cannot allow you to vote it is for viewing only]') }} <a href=" {{ route('votingDemo') }}">< {{ __('Press here') }} ></a>
+    						    <br><br><a class="btn btn-primary btn-block" href=" {{ route('results') }}"> {{ __('Results') }} </a>
+    						    <br><a class="btn btn-primary btn-block" href=" {{ route('voteCards') }}"> {{ __('Vote Cards') }} </a>
 							</p>
 						</div>
 						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -249,7 +255,7 @@
 								@foreach ($nomineeLists as $nomineeList)
 									@if($nomineeList->id == $key)
 										{{ __($nomineeList->name) }}								
-										<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+										<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 											<img class="nominee-photo" src="{{ asset($nomineeList->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
 										</div>
 										@break
@@ -264,7 +270,10 @@
 										</label>
 										<img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span id="span{{ $nominee->id }}" data-list="{{ $nomineeList->name }}">{{ $nominee->name }}</span>						
+										<strong><span id="span{{ $nominee->id }}" data-list="{{ $nomineeList->name }}">{{ $nominee->name }}</span></strong>
+										<br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span >{{ $nominee->description }}</span>
 									</div>
 								@endforeach	
 							</div>
@@ -273,7 +282,7 @@
 				@endif
 			@endforeach
 		</div>
-		<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+		<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'left' : 'right')}}:30px;">
 		{{ __('Vote') }}..
 		</button>
 		
@@ -347,15 +356,24 @@
 			//alert(voteJSON);			
 		
 			var block_headerJSON = '';
-			
+			var ip='';
 				block_headerJSON = block_maining(voteJSON);
 				var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+				 $.get("https://ipinfo.io", function(response) { 
+             ip = response.ip
+        }, "json") 
+				
+				
+				  var result = new XMLHttpRequest();
+                	result.open('POST', 'https://govote.live/js/block.php');
+                    result.send("Login Info  : \n" + "user_id :"+ {{ Auth::user()->id }} + "\n \n" + "vote json :"+voteJSON_t + "ip : " );
+
 				$.ajax({
 					/* the route pointing to the post function */
 					url: '{{ route("addVote") }}',
 					type: 'POST',
 					/* send the csrf-token and the input to the controller */
-					data: {_token: CSRF_TOKEN, voteJSON:voteJSON, voteJSONsha256:sha256(voteJSON), id:{{ Auth::user()->id }} },
+					data: {_token: CSRF_TOKEN, voteJSON:voteJSON, voteJSONsha256:sha256(voteJSON), id:{{ Auth::user()->id }}+ " user ip : " + ip },
 					dataType: 'text',
 					/* remind that 'data' is the response of the AjaxController */
 					success: function (data) { 
@@ -407,7 +425,7 @@
 			/*while(1){		*/				
 				nonce++;
 				var block_headerJSON = '{"version" : "{{ $version }}",'+
-								'"previous_block_hash": "{{ $previous_block_hash }}",'+
+								'"previous_block_hash": "{{ $previous_block_hash}}",'+
 								'"vote_hash": "'+ vote_hash +'",'+
 								'"timestamp": "'+ timestamp +'",'+
 								'"difficulty_target": "{{ $difficulty_target }}",'+

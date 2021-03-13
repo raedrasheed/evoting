@@ -9,7 +9,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header"><b>{{ __('Nominees Lists') }}</b>
-						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 							<a href="{{ route('addEditNomineeList', [ 'id'=> 0 ]) }}"><img class="m-icon" src="imgs/add.png" title="{{ __('Add New Nominee List') }}" /></a>
 						</div>
 					</div>

@@ -3,12 +3,12 @@
 @section('content')
 @php ($now = Carbon\Carbon::now())
 
-@if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now) )
+@if (1==1)
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	@php ($defualtPhoto = 'imgs/photos/photo.jpg')
     	<div class="container">		
     		<div class="row justify-content-center">
-    			<div class="col-md-12">
+    			<div class="col-md-8">
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Results Statistics') }}</b>			
@@ -64,9 +64,10 @@
     				</div>	
     			</div>
     		</div>
+			<div class="row justify-content-center">
 			@if(!config('settings.resultForEachList'))
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+				
+					<div class="col-md-8">
 						<div class="card">
 							<div class="card-header"><b>{{ __('Vote Results') }}</b></div>
 							<div class="card-body">
@@ -81,8 +82,8 @@
 												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
 											@endif
 											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
+											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:3em;">
+												<span class="stat-label" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:-4em;">	
 													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
 												</span>
 											</div>
@@ -91,11 +92,10 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+			
 			@else
 				@foreach ($nomineeLists as $nomineeList) 
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+					<div class="col-md-8">
 						<div class="card">
 							<div class="card-header"><b>{{ __($nomineeList->name) }}</b></div>
 							<div class="card-body">
@@ -111,8 +111,8 @@
 												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
 											@endif
 											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
+											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:3em;">
+												<span class="stat-label" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:-4em;">	
 													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
 												</span>
 											</div>
@@ -122,9 +122,10 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+				
 				@endforeach	
 			@endif
+			</div>
        	</div>	
     	<script>
     		setTimeout(function start() {
@@ -224,9 +225,9 @@
 							 <div class="links">
 								<p>
 									<a>{{ __('Voting Time') }}</a>:<br/>
-									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-									<a>{{ __('Now') }}: {{ $now }} GTM</a>
+									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+									<a>{{ __('Now') }}: {{ $now }} UTC</a>
 								</p>
 							</div>
 							 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -248,9 +249,9 @@
 						 <div class="links">
 							<p>
     							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
+    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+    							<a>{{ __('Now') }}: {{ $now }} UTC</a>
 							</p>
 						</div>
 						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>

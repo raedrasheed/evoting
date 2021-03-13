@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Carbon\Carbon;
+use App\Log;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -64,12 +67,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+		
+        $user =  User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'role' => '2',
             'password' => Hash::make($data['password']),
         ]);
+		$this->guard()->login($user);
+		$this->addLog("Register");
+		
+		return $user;
     }
+	
+	public function addLog($action){
+		$log = new Log();
+		$log->user_id = Auth::user()->id;
+		$log->action = $action;
+		$log->time = Carbon::now();
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$MAC = exec('getmac');
+		$MAC = strtok($MAC, ' '); 
+		$log->mac = $MAC;
+		$log->save();
+		
+	}
 }

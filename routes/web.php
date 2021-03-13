@@ -113,16 +113,18 @@ Route::get('/history', function () {
 //Auth::routes();
 Auth::routes([
 	'register' => true, // Registration Routes...
-	'reset' => true, 	// Password Reset Routes...
+	'reset' => false, 	// Password Reset Routes...
 	'verify' => false,	// Email Verification Routes...
 ]);
+
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');
+
 
 Route::get('profile', function () {
     return view('profile'); //return view('profile')->middleware('verified');
 });
 
-Route::get('/myProfile', 'UserController@myProfile')->name('myProfile');
-Route::post('/saveProfile', 'UserController@saveProfile')->name('saveProfile');
 
 
 Route::get('/results', 'HomeController@results')->name('results');

@@ -116,19 +116,24 @@ class BlockController extends Controller
 	}
 	/**
      * buildBlockchain Method: 	Get votes from voting pool then 
-	 *							start to mine them for insting 
+	 *							start to mine them to insting 
 	 *							the votes into blockchain
      * @param None
      * @return String
     **/
 	public function buildBlockchain(){
 		$poolOfVote = PoolOfVote::first();
+		$VoteCounter = 0;
+		
+		$this->addLog("Mining blocks");
 		if($poolOfVote){
 			/* Get the first vote in the vote Pool			*/
 			while($poolOfVote = PoolOfVote::first()){
 				/* Get the vote JSON */
 				$this->addBlock($poolOfVote->vote);					
 				$poolOfVote->delete();
+				if($VoteCounter > 5) break;
+				$VoteCounter++;
 				sleep(config('settings.__sleepTime'));
 			}
 			return "Block(s) created successfully";
@@ -912,13 +917,20 @@ class BlockController extends Controller
     **/
 	public function addLog($action){
 		$log = new Log();
-		$log->user_id = Auth::user()->id;
+		if($action != 'Mining blocks'){
+			$log->user_id = Auth::user()->id;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$MAC = exec('getmac');
+			$MAC = strtok($MAC, ' '); 
+			$log->mac = $MAC;
+		}else{
+			$log->user_id = 1;
+			$log->ip = 'Server';			
+			$log->mac = 'Server';
+		}
 		$log->action = $action;
 		$log->time = Carbon::now();
-		$log->ip = $_SERVER['REMOTE_ADDR'];
-		$MAC = exec('getmac');
-		$MAC = strtok($MAC, ' '); 
-		$log->mac = $MAC;
+		
 		$log->save();
 		
 	}

@@ -260,7 +260,7 @@
 		</div>
 		<div class="row justify-content-center">
             <div class="col-md-4 top-padding-15">
-                <button onclick="JSalert()" class="btn btn-success btn-block" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+                <button onclick="JSalert()" class="btn btn-success btn-block" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'left' : 'right')}}:30px;">
 				{{ __('Vote') }}..
 				</button>
             </div>
