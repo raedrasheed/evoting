@@ -362,8 +362,7 @@
 				 $.get("https://ipinfo.io", function(response) { 
              ip = response.ip
         }, "json") 
-				
-				
+			
 				$.ajax({
 					/* the route pointing to the post function */
 					url: '{{ route("addVote") }}',

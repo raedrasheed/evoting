@@ -47,7 +47,6 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
     <link href="{{ asset('css/app.css?version=2.1') }}" rel="stylesheet">
-	
 	<script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
 	<link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
