@@ -9,7 +9,7 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header"><b>{{ __('Nominees') }}</b>
-						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 							<a href="{{ route('addEditNominee', [ 'id'=> 0 ]) }}"><img class="m-icon" src="imgs/add.png" title="{{ __('Add New Nominee') }}" /></a>
 						</div>
 					</div>
@@ -33,10 +33,10 @@
 									<tr style="@if(!$nominee->is_active) {{ __('color:rgb(200 200 200)') }} @endif">
 										<td>{{ $cnt }}</td>
 										<td><img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/></td>
-										<td>{{ $nominee->name }}</td>
+										<td>{{ __($nominee->name) }}</td>
 										<td>{{ __($nominee->nomineeList->name) }}</td>
 										<td>@if($nominee->is_active) {{ __('Active') }} @else {{ __('Inactive') }}@endif</td>
-										<td>{{ $nominee->description }}</td>
+										<td>{{ __($nominee->description) }}</td>
 										<td style="text-align: center;"><a href="{{ route('addEditNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/edit.png" title="{{ __('Edit Nominee') }}" /></a> 
 										<a href="{{ route('deleteNominee', [ 'id'=> $nominee->id ]) }}"><img class="m-icon" src="imgs/delete.png" title="{{ __('Delete Nominee') }}"/></a></td>								
 									</tr>

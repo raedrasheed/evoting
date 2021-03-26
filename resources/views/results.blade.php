@@ -2,13 +2,13 @@
 
 @section('content')
 @php ($now = Carbon\Carbon::now())
-
-@if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now) )
+@php ($maintenance = (int) config('settings.maintenance'))
+@if (!$maintenance)
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	@php ($defualtPhoto = 'imgs/photos/photo.jpg')
     	<div class="container">		
     		<div class="row justify-content-center">
-    			<div class="col-md-12">
+    			<div class="col-md-8">
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Results Statistics') }}</b>			
@@ -64,9 +64,10 @@
     				</div>	
     			</div>
     		</div>
+			<div class="row justify-content-center">
 			@if(!config('settings.resultForEachList'))
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+				
+					<div class="col-md-8">
 						<div class="card">
 							<div class="card-header"><b>{{ __('Vote Results') }}</b></div>
 							<div class="card-body">
@@ -80,9 +81,9 @@
 											@else
 												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
 											@endif
-											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
+											<span class="stat-bar-name">{{ __($nomineeVotes['name']) }}</span>
+											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:3em;">
+												<span class="stat-label" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:-4em;">	
 													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
 												</span>
 											</div>
@@ -91,11 +92,10 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+			
 			@else
 				@foreach ($nomineeLists as $nomineeList) 
-				<div class="row justify-content-center">
-					<div class="col-md-12">
+					<div class="col-md-8">
 						<div class="card">
 							<div class="card-header"><b>{{ __($nomineeList->name) }}</b></div>
 							<div class="card-body">
@@ -110,9 +110,9 @@
 											@else
 												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
 											@endif
-											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
+											<span class="stat-bar-name">{{ __($nomineeVotes['name']) }}</span>
+											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:3em;">
+												<span class="stat-label" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}}:-4em;">	
 													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
 												</span>
 											</div>
@@ -122,16 +122,17 @@
 							</div>
 						</div>	
 					</div>
-				</div>
+				
 				@endforeach	
 			@endif
+			</div>
        	</div>	
     	<script>
     		setTimeout(function start() {
     		  $(".stat-bar").each(function (i) {
     			var $bar = $(this);
-    			$(this).append('<span class="stat-count" style="{{(App::isLocale("ar") ? "left" : "right")}}:0.25em"></span>');
-    			$(this).append('<span class="stat-count-pers" style="{{(App::isLocale("ar") ? "left" : "right")}}:-3.2em"></span>');
+    			$(this).append('<span class="stat-count" style="{{(App::isLocale("ar") || App::isLocale("he")  ? "left" : "right")}}:0.25em"></span>');
+    			$(this).append('<span class="stat-count-pers" style="{{(App::isLocale("ar") || App::isLocale("he")  ? "left" : "right")}}:-3.2em"></span>');
     			setTimeout(function () {
     			  $bar.css("width", $bar.attr("data-percent"));
     			}, i * 100);
@@ -224,9 +225,9 @@
 							 <div class="links">
 								<p>
 									<a>{{ __('Voting Time') }}</a>:<br/>
-									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-									<a>{{ __('Now') }}: {{ $now }} GTM</a>
+									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+									<a>{{ __('Now') }}: {{ $now }} UTC</a>
 								</p>
 							</div>
 							 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -237,28 +238,34 @@
 		</div>
     @endif
 @else
-    <div class="container">		
-		<div class="row justify-content-center">
-			<div class="col-md-8">
-				<div class="card">
-					<div class="card-header">{{ __('Notes') }}</div>
-					<div class="card-body">
-					    <h4>@lang('Welcome') {{ Auth::user()->name }}</h4>
-						{{ __('Vote not finished') }}
-						 <div class="links">
-							<p>
-    							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }} GTM</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }} GTM</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }} GTM</a>
-							</p>
-						</div>
-						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
-					</div>
-				</div>
-			</div>
-		</div>	
-	</div>
-
+   <div class="container">		
+	<div class="row justify-content-center">
+	<div class="col-md-8">
+    <div class="card">
+		<div class="card-header"><b>{{ trans('app.title') }}</b></div>
+        <div class="card-body justify-content-center">
+			<div class="row justify-content-center">
+                    <img src="imgs/logo.png" width="40%">
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <br/><br/>
+                    <a>
+					{{ __('Maintenance') }}
+                    </a>
+                </P>
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <a>
+                        {{ __('Maintenance') }}
+                    </a>
+                </P>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
 @endif
 @endsection
