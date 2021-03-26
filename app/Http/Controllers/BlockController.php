@@ -132,7 +132,8 @@ class BlockController extends Controller
 				/* Get the vote JSON */
 				$this->addBlock($poolOfVote->vote);					
 				$poolOfVote->delete();
-				if($VoteCounter > 2) break;
+
+				if($VoteCounter > 5) break;
 				$VoteCounter++;
 				sleep(config('settings.__sleepTime'));
 			}

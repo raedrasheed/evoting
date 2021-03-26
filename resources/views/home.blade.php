@@ -363,7 +363,6 @@
              ip = response.ip
         }, "json") 
 				
-				
 				$.ajax({
 					/* the route pointing to the post function */
 					url: '{{ route("addVote") }}',

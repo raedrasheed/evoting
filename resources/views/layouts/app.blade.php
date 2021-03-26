@@ -47,7 +47,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
     <link href="{{ asset('css/app.css?version=2.1') }}" rel="stylesheet">
-	
+
 	<script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
 	<link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
@@ -90,7 +90,6 @@
 									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 										<a class="dropdown-item" href="{{ url('lang/ar') }}"><img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي</a>
 										<!--<a class="dropdown-item" href="{{ url('lang/he') }}"><img src="{{asset('imgs/he.png')}}" width="20px" height="20x"> עִברִית</a>-->
-										<a class="dropdown-item" href="{{ url('lang/en') }}"><img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English</a>
 										</div>
 								</li>
 					</ul>

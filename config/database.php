@@ -62,8 +62,8 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        
-        'mysql1' => [
+		
+		'mysql1' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST_NODE001', '127.0.0.1'),
@@ -262,7 +262,6 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        
 
         'pgsql' => [
             'driver' => 'pgsql',
