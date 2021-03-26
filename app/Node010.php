@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Node010 extends Model
 {
-    //
+    protected $connection = 'mysql10';
 }

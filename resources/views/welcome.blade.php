@@ -2,46 +2,96 @@
 
 @section('content')   
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
-		<div class="container ">		
-    		<div class="row justify-content-center">
-    			<div class="col-md-12">
-    				<div class="card">
-    					<div class="card-header">
-    					<b>{{ __('Welcome') }}</b>			
-    					</div>
+		<div class="container h-100">		
+    		<div class="row align-items-center h-100">
+    			<div class="col-md-4 mx-auto">
+    				<div class="card">    					
     					<div class="card-body">
-							<div class="row justify-content-center">
-								<p>
-									 {{ __('You are free to vote on GoVote.Live for your best choice.') }} 
-									 {{ __('Our eVoting system based on Blockchain technology so, no one can change you choice.') }}
-									 {{ __('Current voting for football best team, player, goalkeeper, and coach.') }}
-									 {{ __('Feel free to contact us') }} <a href="mailto:s@govote.live">info@govote.live</a>.
-								</p>
-							</div>
-							<div class="row">
-									@php ($now = Carbon\Carbon::now())
-									<!--<div class="links">
-										<a>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</a>
-									</div>-->
-								<p>
-									<Strong><a>{{ __('Voting Time') }}</a></Strong><br/>
-									<a><Strong>{{ __('From') }}:</Strong> {{ config('settings.votingStartTime') }} GTM</a><br/>
-									<a><Strong>{{ __('To') }}:</Strong> {{ config('settings.votingEndTime') }} GTM</a><br/>
-									<a><Strong>{{ __('Now') }}:</Strong> {{ $now }} GTM</a><br/>		
-								</p>
-							</div>
+							<form method="POST" action="{{ route('login') }}">
+								@csrf
+
+								<div class="form-group row">
+									<div class="col-md-12">
+										<input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required placeholder="{{ __('Username') }}">
+
+										@if ($errors->has('username'))
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $errors->first('username') }}</strong>
+											</span>
+										@endif
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-md-12">
+										<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="{{ __('Password') }}">
+
+										@error('password')
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
+								</div>						
+								<div class="form-group row mb-0">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-primary btn-block">
+											{{ __('Login') }}
+										</button>                                
+									</div>
+								</div>
+								<br/>
+								<div class="form-group row mb-0">
+									<div class="col-md-12">
+										<div class="form-group">									
+											<a href="{{url('/redirect')}}" class="btn btn-primary btn-block"><img src="{{ asset('imgs/facebook.png') }}" width="16px"> {{ __('Login with Facebook') }}</a>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row mb-0">
+									<div class="col-md-12">
+										<div class="form-group">									
+											@if (Route::has('password.request'))
+												<p align="center">
+												<a class="btn btn-link" href="{{ route('password.request') }}">
+													{{ __('Forgot Your Password?') }}
+												</a>
+												</p>
+											@endif
+										</div>
+									</div>
+								</div>
+										
+							</form>
+								<hr/>
+								@if (Route::has('register'))
+									<div class="form-group row mb-0">
+										<div class="col-md-12">
+											<div class="form-group">									
+												<a class="btn btn-success btn-block" href="{{ route('register') }}">{{ __('Register') }}</a>
+											</div>
+										</div>
+									</div>									
+								@endif
 						</div>
 					</div>
-				</div>
-			</div>
-			
-			<div class="row justify-content-center">
-    			<div class="col-md-12">
+				</div>	
+				<div class="col-md-8 mx-auto">
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Results Statistics') }}</b>			
     					</div>
     					<div class="card-body">
+						<div class="form-group row mb-0">
+							<div class="col-md-12">
+								<p>
+									{{ __('We are conducting an opinion poll on the popularity of the electoral lists that will participate in the palestinian elections.') }}
+								</p>
+								<p>
+								{{ __('Feel free to contact us') }} <a href="mailto:info@govote.live">info@govote.live</a>
+								</p>
+							</div>
+						</div>	
     					<div class="form-group row">						
     						<div class="stat-circle stat-main col-md-4" data-count="{{ $allVoters }}" data-percent-count="{{ $allVoters }}">
     							<div class="stat-count-circle">0							 
@@ -91,78 +141,20 @@
     					</div>
     				</div>	
     			</div>
-    		</div>
-			@if(!config('settings.resultForEachList'))
-				<div class="row justify-content-center">
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header"><b>{{ __('Vote Results') }}</b></div>
-							<div class="card-body">
-								<div class="stat-holder">	
-									@php ($votes = 0)
-									@php ($votesPercentage = 0)
-									@foreach (json_decode($nomineesVotesJSON, true) as $nomineeVotes)    								
-											@php ($votes = $nomineeVotes['votes'])
-											@if($totalVotes == 0)
-												@php ($votesPercentage = 0)
-											@else
-												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
-											@endif
-											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
-													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
-												</span>
-											</div>
-									@endforeach	
-								</div>
-							</div>
-						</div>	
-					</div>
-				</div>
-			@else
-				 
-				<div class="row justify-content-center">
-				@foreach ($nomineeLists as $nomineeList)
-					<div class="col-md-6">
-						<div class="card">
-							<div class="card-header"><b>{{ __($nomineeList->name) }}</b></div>
-							<div class="card-body">
-								<div class="stat-holder">	
-									@php ($votes = 0)
-									@php ($votesPercentage = 0)
-									@foreach (json_decode($nomineesVotesJSON, true) as $nomineeVotes)    
-										@if($nomineeVotes['nominee_list_id'] == $nomineeList->id)
-											@php ($votes = $nomineeVotes['votes'])
-											@if($totalVotes == 0)
-												@php ($votesPercentage = 0)
-											@else
-												@php ($votesPercentage = $nomineeVotes['votes'] / $totalVotes * 100 + 5)
-											@endif
-											<span class="stat-bar-name">{{ $nomineeVotes['name'] }}</span>
-											<div class="stat-bar cf" data-percent="{{ $votesPercentage }}%" data-percent-count="{{ $votes }}" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:3em;">
-												<span class="stat-label" style="{{(App::isLocale('ar') ? 'right' : 'left')}}:-4em;">	
-													 <img src="{{ asset($nomineeVotes['photo']) }}" alt="Avatar" style="width:45px;  height:45px;border: solid 0px #3d3d3d;" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';">
-												</span>
-											</div>
-										@endif
-									@endforeach	
-								</div>
-							</div>
-						</div>	
-					</div>
-				@endforeach	
-				</div>
 				
-			@endif
-			<div class="row justify-content-center">
-				<div class="links" style="text-align:center">
-					
-					<a  style="color:#F00;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
-					<a>{{ __('Copyright ©2021 GoVote.Live. All rights reserved') }}</a><br/>
+				<div class="col-md-12 mx-auto">
+					<div class="links" style="text-align:center">
+						<br />
+						<br />
+						<br />
+						<br />
+						<a  style="color:#fff;">{{ __('This System Based on Blockchain Technology') }}</a><br/>
+						<a>{{ __('Copyright ©2021 GoVote.Live. All rights reserved') }}</a><br/>
+					</div>
 				</div>
-			</div>
-    	<script>
+    	
+		</div>
+			<script>
     		setTimeout(function start() {
     		  $(".stat-bar").each(function (i) {
     			var $bar = $(this);

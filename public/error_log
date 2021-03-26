@@ -1,0 +1,20 @@
+[22-Jan-2021 17:09:07 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:07 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:07 America/New_York] PHP Fatal error:  require(): Failed opening required '/home/almaelvl/govote.live/../vendor/autoload.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:13 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:13 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:13 America/New_York] PHP Fatal error:  require(): Failed opening required '/home/almaelvl/govote.live/../vendor/autoload.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:32 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:32 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[22-Jan-2021 17:09:32 America/New_York] PHP Fatal error:  require(): Failed opening required '/home/almaelvl/govote.live/../vendor/autoload.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/almaelvl/govote.live/index.php on line 24
+[10-Feb-2021 16:20:00 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../govotelive/vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[10-Feb-2021 16:20:00 America/New_York] PHP Warning:  require(/home/almaelvl/govote.live/../govotelive/vendor/autoload.php): failed to open stream: No such file or directory in /home/almaelvl/govote.live/index.php on line 24
+[10-Feb-2021 16:20:00 America/New_York] PHP Fatal error:  require(): Failed opening required '/home/almaelvl/govote.live/../govotelive/vendor/autoload.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/almaelvl/govote.live/index.php on line 24
+[18-Mar-2021 23:02:37 UTC] PHP Fatal error:  Uncaught RuntimeException: Translation file [/home/almaelvl/govotelive/resources/lang/he.json] contains an invalid JSON structure. in /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php:145
+Stack trace:
+#0 [internal function]: Illuminate\Translation\FileLoader->Illuminate\Translation\{closure}(Array, '/home/almaelvl/...')
+#1 /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1512): array_reduce(Array, Object(Closure), Array)
+#2 /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(152): Illuminate\Support\Collection->reduce(Object(Closure), Array)
+#3 /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php(63): Illuminate\Translation\FileLoader->loadJsonPaths('he')
+#4 /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Translation/Translator.php(324): Illuminate\Translation\FileLoader->load('he', '*', '*')
+#5 /home/almaelvl/govotelive/vendor/la in /home/almaelvl/govotelive/vendor/laravel/framework/src/Illuminate/Translation/FileLoader.php on line 145

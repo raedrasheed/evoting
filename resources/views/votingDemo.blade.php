@@ -16,7 +16,7 @@
 								@foreach ($nomineeLists as $nomineeList)
 									@if($nomineeList->id == $key)
 										{{ __($nomineeList->name) }}								
-										<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+										<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 											<img class="nominee-photo" src="{{ asset($nomineeList->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
 										</div>
 										@break
@@ -31,7 +31,10 @@
 										</label>
 										<img class="nominee-photo" src="{{ asset($nominee->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/><br/>
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<span id="span{{ $nominee->id }}" >{{ $nominee->name }}</span>						
+										<strong><span id="span{{ $nominee->id }}" >{{ __($nominee->name) }}</span></strong>
+										<br/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<span >{{ __($nominee->description) }}</span>					
 									</div>
 								@endforeach	
 							</div>
@@ -41,7 +44,7 @@
 			@endforeach
 		</div>
 	</div>
-	<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') ? 'left' : 'right')}}:30px;">
+	<button onclick="JSalert()" class="btn btn-success to-bottom rounded-button-50" style="{{(App::isLocale('ar') || App::isLocale('he') ? 'left' : 'right')}}:30px;">
 		{{ __('Vote') }}..
 	</button>
 	<script type="text/javascript">
@@ -82,32 +85,31 @@
 	}
 	</script>	
 @else
-	<div class="container">		
+    <div class="container">		
 	<div class="row justify-content-center">
 	<div class="col-md-8">
     <div class="card">
 		<div class="card-header"><b>{{ trans('app.title') }}</b></div>
         <div class="card-body justify-content-center">
 			<div class="row justify-content-center">
-                    <img src="imgs/iug_logo.png" width="40%">
+                    <img src="imgs/logo.png" width="40%">
             </div>
             <div class="row justify-content-center">
                 <P>
                     <br/><br/>
                     <a>
-                      نظام الانتخاب الإلكتروني
+					{{ __('Maintenance') }}
                     </a>
                 </P>
             </div>
             <div class="row justify-content-center">
                 <P>
                     <a>
-                       الموقع تحت الصيانة سنعود بعد دقائق
+                        {{ __('Maintenance') }}
                     </a>
                 </P>
             </div>
         </div>
-    </div>
     </div>
     </div>
     </div>

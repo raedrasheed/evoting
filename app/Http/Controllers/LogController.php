@@ -17,13 +17,13 @@ class LogController extends Controller
                         ->join('users', 'users.id', '=', 'logs.user_id')
                         ->where('logs.user_id',$id)
                         ->orderBy('logs.created_at', 'desc')
-                        ->get();
+                        ->paginate(15);
 		}else{
 			//$logs = Log::orderBy('created_at', 'desc')->get();	
-				$logs = Log::select('*')
+				$logs = Log::select('*','logs.id as logID')
                         ->join('users', 'users.id', '=', 'logs.user_id')
                         ->orderBy('logs.created_at', 'desc')
-                        ->get();
+                        ->paginate(15);
 		}        
 		return view ('logs',compact('logs'));     
     }
@@ -31,7 +31,7 @@ class LogController extends Controller
 		if($id){
 			$log = Log::find($id);
 			$this->addLog("Delete log action: ".$log->action);
-			$log->delete();
+			//$log->delete();
 		}
 		$logs = Log::all();		
 		return redirect()->route('logs', '0')->with( ['logs' => $logs] );
@@ -39,7 +39,7 @@ class LogController extends Controller
     }
 	public function clearLogs(){
 		
-		Log::truncate();
+		//Log::truncate();
 		$this->addLog("Clear all logs");
 		$logs = Log::all();		
 		return redirect()->route('logs', '0')->with( ['logs' => $logs] );

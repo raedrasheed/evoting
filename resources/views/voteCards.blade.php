@@ -5,8 +5,8 @@
 
 @php ( $choiceElement = 'imgs/unchecked.png' )
 @php ($defualtPhoto = 'imgs/photos/photo.jpg')
-
-@if (Carbon\Carbon::parse(config('settings.votingEndTime'))->lt($now))
+@php ($maintenance = (int) config('settings.maintenance'))
+@if (!$maintenance)
     @if (Auth::user()->role == 1 || (Auth::user()->role == 2 && config('settings.viewResults')))
     	<div class="container">		
     		<div class="row justify-content-center">
@@ -14,7 +14,7 @@
     				<div class="card">
     					<div class="card-header">
     					<b>{{ __('Voting Cards') }}: {{ $noOfVotes }} {{ __('Cards') }}</b>
-    						<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+    						<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
     							{{ __('Blockchain Status') }}: 
     							
     								@if ( $fine )<span style="color:#38c172;font-weight:600;text-decoration:none;"> {{ __('Fine') }}</span>
@@ -68,7 +68,7 @@
 														@if($nomineeList->id == $key)
 															<b>{{ __($nomineeList->name) }}	</b>
 															@if(config('settings.viewListImageInVoteCards'))
-															<div class="{{(App::isLocale('ar') ? 'to-left' : 'to-right')}}">
+															<div class="{{(App::isLocale('ar') || App::isLocale('he') ? 'to-left' : 'to-right')}}">
 																<img class="nominee-photo" src="{{ asset($nomineeList->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
 															</div>
 															@endif
@@ -97,7 +97,7 @@
 														
 														<div class="raw" style="padding-top:5px;">
 															<img src="{{ asset($choiceElement) }}" style="width:25px;" />
-															<span id="span{{ $Nominee->id }}" >{{ $Nominee->name }}</span>						
+															<span id="span{{ $Nominee->id }}" >{{ __($Nominee->name) }}</span>						
 														</div>
 													@endforeach	
 												</div>
@@ -132,9 +132,9 @@
 							 <div class="links">
 								<p>
 									<a>{{ __('Voting Time') }}</a>:<br/>
-									<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-									<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-									<a>{{ __('Now') }}: {{ $now }}</a>
+									<a>{{ __('From') }} {{ config('settings.votingStartTime') }} UTC</a><br/>
+									<a>{{ __('To') }} {{ config('settings.votingEndTime') }} UTC</a><br/>
+									<a>{{ __('Now') }}: {{ $now }} UTC</a>
 								</p>
 							</div>
 							 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
@@ -146,26 +146,33 @@
     @endif
 @else
     <div class="container">		
-		<div class="row justify-content-center">
-			<div class="col-md-8">
-				<div class="card">
-					<div class="card-header">{{ __('Notes') }}</div>
-					<div class="card-body">
-					    <h4>@lang('Welcome') {{ Auth::user()->name }}</h4>
-						{{ __('Vote not finished') }}
-						 <div class="links">
-							<p>
-    							<a>{{ __('Voting Time') }}</a>:<br/>
-    							<a>{{ __('From') }} {{ config('settings.votingStartTime') }}</a><br/>
-    							<a>{{ __('To') }} {{ config('settings.votingEndTime') }}</a><br/>
-    							<a>{{ __('Now') }}: {{ $now }}</a>
-							</p>
-						</div>
-						 <p>{{ __('Thanks') }} - {{ __('GoVote Live Team') }}</p>
-					</div>
-				</div>
-			</div>
-		</div>	
-	</div>
+	<div class="row justify-content-center">
+	<div class="col-md-8">
+    <div class="card">
+		<div class="card-header"><b>{{ trans('app.title') }}</b></div>
+        <div class="card-body justify-content-center">
+			<div class="row justify-content-center">
+                    <img src="imgs/logo.png" width="40%">
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <br/><br/>
+                    <a>
+					{{ __('Maintenance') }}
+                    </a>
+                </P>
+            </div>
+            <div class="row justify-content-center">
+                <P>
+                    <a>
+                        {{ __('Maintenance') }}
+                    </a>
+                </P>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
 @endif
 @endsection
