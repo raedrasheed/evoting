@@ -55,7 +55,7 @@
 	
 	
 </head>
-<body dir="{{(App::isLocale('ar') || App::isLocale('he') ? 'rtl' : 'ltr')}}" style="text-align:{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}};background:url({{ asset('imgs/background3.jpg')}}) no-repeat center center fixed;background-size: cover;">
+<body dir="{{(App::isLocale('ar') || App::isLocale('he') ? 'rtl' : 'ltr')}}" style="text-align:{{(App::isLocale('ar') || App::isLocale('he') ? 'right' : 'left')}};background:#888;/*url({{-- asset('imgs/background3.jpg')--}}) no-repeat center center fixed;background-size: cover;*/">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
