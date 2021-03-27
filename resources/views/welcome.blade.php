@@ -85,7 +85,7 @@
 						<div class="form-group row mb-0">
 							<div class="col-md-12">
 								<p>
-								{{ __('We are conducting an opinion poll on the popularity of the electoral lists that will participate in the palestinian elections.') }}c
+								{{ __('We are conducting an opinion poll on the popularity of the electoral lists that will participate in the palestinian elections.') }}
 								</p>
 								<p>
 								{{ __('Feel free to contact us') }} <a href="mailto:info@govote.live">info@govote.live</a>

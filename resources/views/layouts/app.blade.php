@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+@php ($defualtPhoto = 'imgs/photos/photo.jpg') @endphp
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <!-- Facebook Pixel Code -->
@@ -90,13 +91,19 @@
 										<a class="dropdown-item" href="{{ url('lang/ar') }}"><img src="{{asset('imgs/ar.png')}}" width="20px" height="20x"> عربي</a>
 										<!--<a class="dropdown-item" href="{{ url('lang/he') }}"><img src="{{asset('imgs/he.png')}}" width="20px" height="20x"> עִברִית</a>-->
 										<a class="dropdown-item" href="{{ url('lang/en') }}"><img src="{{asset('imgs/us.png')}}" width="20px" height="20x"> English</a>
-										</div>
+									</div>
 								</li>
 					</ul>
 					
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav {{(App::isLocale('ar') || App::isLocale('he') ? 'ml-auto-right' : 'ml-auto')}}">
                         <!-- Authentication Links -->
+						<li class="nav-item">
+							<a class="nav-link" href="{{ route('previousVotes') }}">
+								<img style="width:30px;border-radius: 0px;border:solid 0	px #ccc;" src="{{ asset('imgs/statistics.png') }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
+								{{ __('Previous Votes') }}
+							</a>
+						</li>
 						@guest
 								<li class="nav-item">
 									<a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -107,7 +114,7 @@
                                 </li>
                             @endif
                         @else
-                            @php ($defualtPhoto = 'imgs/photos/photo.jpg') @endphp
+                            
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <img style="width:30px;border-radius: 20px;border:solid 1px #ccc;" src="{{ asset(Auth::user()->photo) }}" onerror="this.onerror=null;this.src='{{ asset($defualtPhoto) }}';"/>
@@ -131,7 +138,13 @@
                                     <a class="dropdown-item" href="{{ route('usersAll') }}">
                                        {{ __('All Users') }}
                                     </a>
-									 <a class="dropdown-item" href="{{ route('buildBlockchain') }}">
+									<a class="dropdown-item" href="{{ route('addEditArchiveVote', [ 'id'=> 0 ]) }}">
+                                       {{ __('Add Archive') }}
+                                    </a>
+									<a class="dropdown-item" href="{{ route('archiveVotes') }}">
+                                       {{ __('Archives') }}
+                                    </a>
+									<a class="dropdown-item" href="{{ route('buildBlockchain') }}">
                                        {{ __('Mining Unmined Blocks') }} ({{ App\PoolOfVote::all()->count() }})
                                     </a>
 									<a class="dropdown-item" href="{{ route('sendSMSForAll') }}">

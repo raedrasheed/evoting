@@ -120,10 +120,18 @@ Auth::routes([
 Route::get('/redirect', 'SocialAuthController@redirect');
 Route::get('/callback', 'SocialAuthController@callback');
 
+Route::get('/resultsPreviousVote/{id}', 'PreviousVoteController@resultsPreviousVote')->name('resultsPreviousVote');
+Route::get('/previousVotes', 'PreviousVoteController@PreviousVotes')->name('previousVotes');
+Route::get('/archiveVotes', 'PreviousVoteController@index')->name('archiveVotes');
+Route::get('/resultArchiveVote/{id}', 'PreviousVoteController@show')->name('resultArchiveVote');
+Route::get('/addEditArchiveVote/{id}', 'PreviousVoteController@create')->name('addEditArchiveVote');
+Route::get('/deleteArchiveVote/{id}', 'PreviousVoteController@destroy')->name('deleteArchiveVote');
+Route::post('/saveArchiveVote', 'PreviousVoteController@store')->name('saveArchiveVote');
 
-Route::get('profile', function () {
-    return view('profile'); //return view('profile')->middleware('verified');
-});
+
+//Route::get('profile', function () {
+//    return view('profile'); //return view('profile')->middleware('verified');
+//});
 
 //Route::get('/myProfile', 'UserController@myProfile')->name('myProfile');
 //Route::post('/saveProfile', 'UserController@saveProfile')->name('saveProfile');
